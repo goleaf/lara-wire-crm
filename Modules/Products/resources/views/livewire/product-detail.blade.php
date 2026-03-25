@@ -1,5 +1,5 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Product</p>
@@ -15,9 +15,9 @@
                 Edit
             </a>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <dl class="grid gap-5 md:grid-cols-2">
             <div>
                 <dt class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">Category</dt>
@@ -68,12 +68,12 @@
                 <dd class="mt-1 text-sm font-medium text-slate-900 dark:text-slate-100">{{ $product->updated_at->diffForHumans() }}</dd>
             </div>
         </dl>
-    </article>
+    </x-crm.card>
 
     @if ($product->description)
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Description</h4>
             <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{{ $product->description }}</p>
-        </article>
+        </x-crm.card>
     @endif
 </section>

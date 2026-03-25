@@ -2,7 +2,7 @@
     <x-crm.status />
 
     <div class="grid gap-6 lg:grid-cols-[17rem_minmax(0,1fr)]">
-        <article class="crm-card p-5">
+        <x-crm.card class="p-5">
             <h3 class="text-base font-semibold text-slate-900 dark:text-white">Category Filter</h3>
             <div class="mt-4 space-y-2">
                 <button
@@ -20,10 +20,10 @@
                     </button>
                 @endforeach
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="space-y-6">
-            <article class="crm-card p-6">
+            <x-crm.card class="p-6">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Products</h3>
                     <div class="flex items-center gap-2">
@@ -79,9 +79,9 @@
                         Pricebook
                     </a>
                 </div>
-            </article>
+            </x-crm.card>
 
-            <article class="crm-card overflow-hidden">
+            <x-crm.card class="overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
                         <thead class="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
@@ -167,7 +167,7 @@
                 <div class="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
                     {{ $products->links() }}
                 </div>
-            </article>
+            </x-crm.card>
         </div>
     </div>
 </section>

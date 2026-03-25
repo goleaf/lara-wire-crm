@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">File Manager</h3>
             <div class="flex items-center gap-2">
@@ -40,11 +40,11 @@
             <input wire:model.live="dateFrom" type="date" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
             <input wire:model.live="dateTo" type="date" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
         </div>
-    </article>
+    </x-crm.card>
 
     @livewire(\Modules\Files\Livewire\FileUploadZone::class, [], key('files-upload-zone'))
 
-    <article class="crm-card p-5">
+    <x-crm.card class="p-5">
         @if ($viewMode === 'grid')
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse ($files as $file)
@@ -114,7 +114,7 @@
         <div class="mt-5">
             {{ $files->links() }}
         </div>
-    </article>
+    </x-crm.card>
 
     @if ($renamingFileId)
         <article class="rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/40 dark:bg-amber-500/10">

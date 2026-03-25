@@ -52,6 +52,18 @@ class ActivityDetail extends Component
         session()->flash('status', 'Activity cancelled.');
     }
 
+    public function delete(): void
+    {
+        abort_unless(auth()->user()?->can('activities.delete'), 403);
+
+        $activityId = $this->activity->getKey();
+
+        Activity::query()->whereKey($activityId)->delete();
+
+        session()->flash('status', 'Activity deleted.');
+        $this->redirectRoute('activities.index', navigate: true);
+    }
+
     public function render(): View
     {
         return view('activities::livewire.activity-detail', [

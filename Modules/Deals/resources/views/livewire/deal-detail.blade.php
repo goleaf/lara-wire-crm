@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $deal->name }}</h2>
@@ -31,7 +31,7 @@
                 </button>
             @endforeach
         </div>
-    </article>
+    </x-crm.card>
 
     <article class="rounded-2xl border border-white/70 bg-white/90 p-3 shadow-sm dark:border-white/10 dark:bg-slate-950/70">
         <div class="flex flex-wrap gap-2">
@@ -47,7 +47,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Owner</dt>
@@ -80,11 +80,11 @@
                     <dd class="mt-1 text-sm text-slate-900 dark:text-slate-100">{{ $deal->source ?? '—' }}</dd>
                 </div>
             </dl>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'products')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="mb-3 text-lg font-semibold text-slate-900 dark:text-white">Line Items</h3>
             <div class="space-y-2">
                 @forelse ($deal->products as $product)
@@ -98,13 +98,13 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">No products attached.</p>
                 @endforelse
             </div>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'activities')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $deal::class, 'modelId' => (string) $deal->id], key('deal-timeline-'.$deal->id))
-        </article>
+        </x-crm.card>
     @endif
 
     @if (in_array($tab, ['quotes', 'invoices', 'files'], true))

@@ -1,16 +1,16 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex items-center justify-between">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Teams</h3>
             <a href="{{ route('teams.create') }}" wire:navigate class="crm-btn crm-btn-primary">
                 New Team
             </a>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card overflow-hidden">
+    <x-crm.card class="overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
                 <thead class="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
@@ -58,6 +58,6 @@
         <div class="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
             {{ $teams->links() }}
         </div>
-    </article>
+    </x-crm.card>
 </section>
 

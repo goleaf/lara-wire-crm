@@ -2,7 +2,10 @@
 
 use App\Models\User;
 use Livewire\Livewire;
+use Modules\Reports\Livewire\DashboardEditor;
+use Modules\Reports\Livewire\DashboardIndex;
 use Modules\Reports\Livewire\ReportBuilder;
+use Modules\Reports\Models\Dashboard as DashboardModel;
 use Modules\Reports\Models\Report;
 use Modules\Users\Models\Role;
 
@@ -48,6 +51,98 @@ test('authorized users can open report index and dashboard', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertOk();
+});
+
+test('authorized users can open dashboards index', function () {
+    $role = makeReportsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('dashboards.index'))
+        ->assertOk()
+        ->assertSee('Dashboards');
+});
+
+test('dashboard livewire index creates dashboard', function () {
+    $role = makeReportsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(DashboardIndex::class)
+        ->set('name', 'Executive Dashboard')
+        ->set('isPublic', true)
+        ->call('createDashboard')
+        ->assertRedirectToRoute('dashboards.index');
+
+    $this->assertDatabaseHas('dashboards', [
+        'name' => 'Executive Dashboard',
+        'owner_id' => $user->id,
+        'is_public' => 1,
+        'is_default' => 0,
+    ]);
+});
+
+test('dashboard livewire editor updates dashboard layout', function () {
+    $role = makeReportsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $dashboard = DashboardModel::query()->create([
+        'name' => 'Operations',
+        'owner_id' => $user->id,
+        'is_default' => false,
+        'is_public' => false,
+        'layout' => [],
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(DashboardEditor::class, ['id' => $dashboard->id])
+        ->set('name', 'Operations Updated')
+        ->set('layoutJson', '{"grid":[{"x":0,"y":0,"w":4,"h":2}]}')
+        ->set('isPublic', true)
+        ->set('isDefault', true)
+        ->call('save')
+        ->assertRedirectToRoute('dashboards.edit', ['id' => $dashboard->id]);
+
+    $this->assertDatabaseHas('dashboards', [
+        'id' => $dashboard->id,
+        'name' => 'Operations Updated',
+        'is_public' => 1,
+        'is_default' => 1,
+    ]);
+});
+
+test('dashboard livewire editor rejects invalid layout json', function () {
+    $role = makeReportsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $dashboard = DashboardModel::query()->create([
+        'name' => 'Pipeline',
+        'owner_id' => $user->id,
+        'is_default' => false,
+        'is_public' => false,
+        'layout' => [],
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(DashboardEditor::class, ['id' => $dashboard->id])
+        ->set('layoutJson', '{invalid')
+        ->call('save')
+        ->assertHasErrors(['layoutJson']);
 });
 
 test('report builder creates a report', function () {

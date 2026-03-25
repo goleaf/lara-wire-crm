@@ -1,7 +1,7 @@
 <section class="mx-auto max-w-4xl space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
             {{ $productId ? 'Edit Product' : 'Create Product' }}
         </h3>
@@ -109,5 +109,5 @@
                 </button>
             </div>
         </form>
-    </article>
+    </x-crm.card>
 </section>

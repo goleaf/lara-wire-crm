@@ -1,10 +1,10 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">SLA Manager</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">One policy per priority, with editable first response and resolution windows.</p>
-    </article>
+    </x-crm.card>
 
     <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <table class="min-w-full text-sm">

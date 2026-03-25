@@ -2,7 +2,7 @@
     <x-crm.status />
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Account Profile</h3>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -89,9 +89,9 @@
                     <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Comma-separated. Chips will be generated on save.</p>
                 </div>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="flex items-center justify-between gap-3">
                 <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Addresses</h3>
                 <label class="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
@@ -119,7 +119,7 @@
                     <input wire:model.blur="shippingAddress.country" type="text" placeholder="Country" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
                 </div>
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="flex flex-wrap items-center justify-end gap-2">
             <a href="{{ route('accounts.index') }}" wire:navigate class="crm-btn crm-btn-secondary">

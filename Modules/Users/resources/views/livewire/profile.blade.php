@@ -1,7 +1,7 @@
 <section class="mx-auto max-w-4xl space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
                 <h2 class="text-xl font-semibold text-slate-900 dark:text-white">My Profile</h2>
@@ -11,10 +11,10 @@
                 <img src="{{ asset('storage/'.$avatar_path) }}" alt="Avatar" class="size-16 rounded-2xl object-cover" />
             @endif
         </div>
-    </article>
+    </x-crm.card>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Account</h3>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -33,9 +33,9 @@
                     @error('avatar') <p class="text-xs text-rose-600">{{ $message }}</p> @enderror
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Security</h3>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -54,9 +54,9 @@
                     <input wire:model.live="password_confirmation" type="password" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Notification Preferences</h3>
             <div class="mt-4 grid gap-3 md:grid-cols-2">
                 @foreach ($notification_types as $type => $enabled)
@@ -78,9 +78,9 @@
                     @error('quiet_hours_end') <p class="text-xs text-rose-600">{{ $message }}</p> @enderror
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="flex items-center justify-between gap-4">
                 <div>
                     <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Quota Progress (This Month)</h3>
@@ -95,7 +95,7 @@
                     <p class="mt-1 text-right text-xs text-slate-500 dark:text-slate-400">{{ $quotaPercent }}%</p>
                 </div>
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="flex justify-end">
             <button type="submit" class="crm-btn crm-btn-primary">

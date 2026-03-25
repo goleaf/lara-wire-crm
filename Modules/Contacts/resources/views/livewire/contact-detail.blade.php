@@ -5,7 +5,7 @@
         </div>
     @endif
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $contact->full_name }}</h2>
@@ -36,7 +36,7 @@
                 </a>
             </div>
         </div>
-    </article>
+    </x-crm.card>
 
     <article class="rounded-2xl border border-white/70 bg-white/90 p-3 shadow-sm dark:border-white/10 dark:bg-slate-950/70">
         <div class="flex flex-wrap gap-2">
@@ -52,7 +52,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Email</dt>
@@ -87,11 +87,11 @@
                     <dd class="mt-1 whitespace-pre-wrap text-sm text-slate-900 dark:text-slate-100">{{ $contact->notes ?? '—' }}</dd>
                 </div>
             </dl>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'deals')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Deals</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($deals as $deal)
@@ -107,17 +107,17 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">No linked deals yet.</p>
                 @endforelse
             </div>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'activities')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $contact::class, 'modelId' => (string) $contact->id], key('contact-timeline-'.$contact->id))
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'cases')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Cases</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($cases as $case)
@@ -133,7 +133,7 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">No linked cases yet.</p>
                 @endforelse
             </div>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'files')

@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
                 <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $report->name }}</h3>
@@ -24,7 +24,7 @@
                 </a>
             </div>
         </div>
-    </article>
+    </x-crm.card>
 
     @if ($report->type !== 'Table')
         <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">

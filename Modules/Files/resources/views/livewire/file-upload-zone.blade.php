@@ -1,4 +1,4 @@
-<article class="crm-card p-6">
+<x-crm.card class="p-6">
     <h4 class="text-base font-semibold text-slate-900 dark:text-white">Upload Files</h4>
 
     <form wire:submit="save" class="mt-4 space-y-4">
@@ -27,4 +27,4 @@
             </button>
         </div>
     </form>
-</article>
+</x-crm.card>

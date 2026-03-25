@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex items-center justify-between gap-3">
             <div>
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $activeDashboard?->name ?? 'Dashboard' }}</h3>
@@ -15,7 +15,7 @@
                 <a href="{{ route('reports.index') }}" wire:navigate class="rounded-xl bg-sky-600 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-500">Manage Reports</a>
             </div>
         </div>
-    </article>
+    </x-crm.card>
 
     <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
         @include('reports::widgets.kpi-card', ['label' => 'Total Pipeline Value', 'value' => number_format($kpis['pipeline_value'], 2), 'trend' => null, 'tone' => 'sky'])

@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Category Manager</h3>
 
         <form wire:submit="createCategory" class="mt-5 grid gap-3 md:grid-cols-4">
@@ -18,9 +18,9 @@
             </button>
         </form>
         @error('name') <p class="mt-2 text-xs text-rose-600">{{ $message }}</p> @enderror
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card overflow-hidden">
+    <x-crm.card class="overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
                 <thead class="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
@@ -81,5 +81,5 @@
                 </tbody>
             </table>
         </div>
-    </article>
+    </x-crm.card>
 </section>

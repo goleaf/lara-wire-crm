@@ -2,7 +2,7 @@
     <x-crm.status />
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $activityId ? 'Edit Activity' : 'New Activity' }}</h3>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -128,7 +128,7 @@
                     </div>
                 @endif
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="flex justify-end gap-2">
             <a href="{{ $activityId ? route('activities.show', $activityId) : route('activities.index') }}" wire:navigate class="crm-btn crm-btn-secondary">

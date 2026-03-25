@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Reports</h3>
@@ -11,7 +11,7 @@
                 New Report
             </a>
         </div>
-    </article>
+    </x-crm.card>
 
     <article class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3 dark:border-slate-800 dark:bg-slate-900">
         <label class="space-y-1">

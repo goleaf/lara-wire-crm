@@ -33,7 +33,7 @@
         }
     @endphp
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $supportCase->number }}</h2>
@@ -54,9 +54,9 @@
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">SLA Countdown</p>
             <p class="mt-2 text-sm font-semibold {{ $slaTextClass }}">{{ $slaLabel }}</p>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="grid gap-4 md:grid-cols-5">
             @foreach ($statusFlow as $statusStep)
                 <button
@@ -68,7 +68,7 @@
                 </button>
             @endforeach
         </div>
-    </article>
+    </x-crm.card>
 
     <div class="grid gap-4 md:grid-cols-4">
         <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -105,7 +105,7 @@
     </article>
 
     @if ($tab === 'comments')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Comments</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($supportCase->comments as $comment)
@@ -140,11 +140,11 @@
                     <button type="submit" class="crm-btn crm-btn-primary">Submit Comment</button>
                 </div>
             </form>
-        </article>
+        </x-crm.card>
     @elseif ($tab === 'activities')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $supportCase::class, 'modelId' => (string) $supportCase->id], key('case-timeline-'.$supportCase->id))
-        </article>
+        </x-crm.card>
     @elseif ($tab === 'files')
         <article class="rounded-3xl border border-dashed border-slate-300 bg-white/70 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-950/30 dark:text-slate-400">
             Files tab placeholder. Integrate with Files module picker/list.

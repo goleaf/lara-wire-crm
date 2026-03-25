@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Activity Feed</h3>
             <div class="flex items-center gap-2">
@@ -45,7 +45,7 @@
                 @endforeach
             </select>
         </div>
-    </article>
+    </x-crm.card>
 
     @forelse ($groupedActivities as $group => $groupItems)
         <article class="space-y-3">

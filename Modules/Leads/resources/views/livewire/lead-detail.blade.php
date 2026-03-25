@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $lead->full_name }}</h2>
@@ -51,7 +51,7 @@
                 @endif
             </div>
         @endif
-    </article>
+    </x-crm.card>
 
     <article class="rounded-2xl border border-white/70 bg-white/90 p-3 shadow-sm dark:border-white/10 dark:bg-slate-950/70">
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -79,7 +79,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Email</dt>
@@ -102,13 +102,13 @@
                     <dd class="mt-1 whitespace-pre-wrap text-sm text-slate-900 dark:text-slate-100">{{ $lead->description ?? '—' }}</dd>
                 </div>
             </dl>
-        </article>
+        </x-crm.card>
     @endif
 
     @if ($tab === 'activities')
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $lead::class, 'modelId' => (string) $lead->id], key('lead-timeline-'.$lead->id))
-        </article>
+        </x-crm.card>
     @elseif ($tab !== 'overview')
         <article class="rounded-3xl border border-dashed border-slate-300 bg-white/70 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-950/30 dark:text-slate-400">
             {{ ucfirst($tab) }} tab placeholder.

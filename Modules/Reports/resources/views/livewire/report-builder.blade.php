@@ -1,13 +1,13 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $reportId ? 'Edit Report' : 'Create Report' }}</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Configure source module, chart type, filters, and date range.</p>
-    </article>
+    </x-crm.card>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="grid gap-4 md:grid-cols-2">
                 <label class="space-y-1 md:col-span-2">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Name</span>
@@ -88,7 +88,7 @@
                     Public report
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
         @if ($previewConfig)
             <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">

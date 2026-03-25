@@ -1,4 +1,4 @@
-<article class="crm-card p-5">
+<x-crm.card class="p-5">
     <div class="flex items-center justify-between gap-3">
         <div>
             <h4 class="text-base font-semibold text-slate-900 dark:text-white">{{ $file->name }}</h4>
@@ -36,4 +36,4 @@
             </ul>
         </div>
     @endif
-</article>
+</x-crm.card>

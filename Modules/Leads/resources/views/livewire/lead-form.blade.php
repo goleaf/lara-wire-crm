@@ -2,7 +2,7 @@
     <x-crm.status />
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Lead Profile</h3>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -96,7 +96,7 @@
                     <textarea wire:model.blur="description" rows="4" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900"></textarea>
                 </div>
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="flex items-center justify-end gap-2">
             <a href="{{ route('leads.index') }}" wire:navigate class="crm-btn crm-btn-secondary">

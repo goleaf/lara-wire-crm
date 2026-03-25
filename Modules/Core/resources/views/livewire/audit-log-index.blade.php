@@ -1,8 +1,8 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Audit Logs</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Track created, updated, and deleted events across key records.</p>
-    </article>
+    </x-crm.card>
 
     <article class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-5 dark:border-slate-800 dark:bg-slate-900">
         <label class="space-y-1">

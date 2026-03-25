@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Pipelines</h3>
         <div class="mt-4 flex flex-wrap items-center gap-2">
             <input wire:model.blur="name" type="text" placeholder="New pipeline name" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
@@ -27,9 +27,9 @@
                 </article>
             @endforeach
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Stages</h3>
         <div class="mt-4 grid gap-3 md:grid-cols-4">
             <input wire:model.blur="newStageName" type="text" placeholder="Stage name" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
@@ -54,5 +54,5 @@
                 <p class="text-sm text-slate-500 dark:text-slate-400">No stages for selected pipeline.</p>
             @endforelse
         </div>
-    </article>
+    </x-crm.card>
 </section>

@@ -1,11 +1,11 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Settings</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Application defaults, company profile, and PDF header information.</p>
-    </article>
+    </x-crm.card>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">App Name</span>
@@ -51,9 +51,9 @@
                     @endif
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Company Info</h4>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -77,7 +77,7 @@
                     <textarea wire:model.live.debounce.300ms="company_address" rows="3" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900"></textarea>
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
         <div class="flex justify-end">
             <button type="submit" class="crm-btn crm-btn-primary">

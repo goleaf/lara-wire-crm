@@ -215,9 +215,9 @@
     </section>
 
     <section x-show="tab === 'activities'" x-cloak>
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $campaign::class, 'modelId' => (string) $campaign->id], key('campaign-timeline-'.$campaign->id))
-        </article>
+        </x-crm.card>
     </section>
 
     <section x-show="tab === 'notes'" x-cloak>

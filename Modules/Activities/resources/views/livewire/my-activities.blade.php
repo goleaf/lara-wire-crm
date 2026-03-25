@@ -1,5 +1,5 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex items-center justify-between gap-3">
             <div>
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">My Activities</h3>
@@ -9,7 +9,7 @@
                 New Activity
             </a>
         </div>
-    </article>
+    </x-crm.card>
 
     <div class="grid gap-6 lg:grid-cols-3">
         <article class="rounded-3xl border border-rose-200 bg-rose-50/80 p-5 shadow-sm dark:border-rose-500/30 dark:bg-rose-500/10">

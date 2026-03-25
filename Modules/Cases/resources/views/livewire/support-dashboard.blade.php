@@ -1,8 +1,8 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Support Dashboard</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Operational view for open load, SLA risk, and team quality.</p>
-    </article>
+    </x-crm.card>
 
     <div class="grid gap-3 md:grid-cols-4">
         <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="grid gap-6 lg:grid-cols-3">
-        <article class="crm-card p-6 lg:col-span-1">
+        <x-crm.card class="p-6 lg:col-span-1">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Cases By Priority</h4>
             <div class="mt-4 space-y-3">
                 @php
@@ -45,9 +45,9 @@
                     </div>
                 @endforeach
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6 lg:col-span-1">
+        <x-crm.card class="p-6 lg:col-span-1">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">My Open Cases</h4>
             <div class="mt-4 space-y-2">
                 @forelse ($myOpenCases as $supportCase)
@@ -60,7 +60,7 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">No open cases assigned.</p>
                 @endforelse
             </div>
-        </article>
+        </x-crm.card>
 
         <article class="rounded-3xl border border-rose-200 bg-rose-50/80 p-6 shadow-sm lg:col-span-1 dark:border-rose-500/30 dark:bg-rose-500/10">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-rose-700 dark:text-rose-300">SLA Breach Alerts</h4>

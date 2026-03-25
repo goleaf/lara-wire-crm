@@ -1,7 +1,7 @@
 <section class="space-y-6">
     <x-crm.status />
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Support Cases</h3>
@@ -27,7 +27,7 @@
                 </a>
             </div>
         </div>
-    </article>
+    </x-crm.card>
 
     <div class="grid gap-3 md:grid-cols-5">
         <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">

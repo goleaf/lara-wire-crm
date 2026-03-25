@@ -1,11 +1,11 @@
 <section class="space-y-6">
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $caseId ? 'Edit Case' : 'Create Case' }}</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Capture support details and SLA context.</p>
-    </article>
+    </x-crm.card>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="grid gap-4 md:grid-cols-2">
                 <label class="space-y-1 md:col-span-2">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Title</span>
@@ -23,9 +23,9 @@
                     @enderror
                 </label>
             </div>
-        </article>
+        </x-crm.card>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <div class="grid gap-4 md:grid-cols-3">
                 <label class="space-y-1">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Status</span>
@@ -147,7 +147,7 @@
                     @enderror
                 </div>
             </div>
-        </article>
+        </x-crm.card>
 
         <article class="rounded-3xl border border-sky-200 bg-sky-50/80 p-4 shadow-sm dark:border-sky-500/30 dark:bg-sky-500/10">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700 dark:text-sky-300">SLA Preview</p>
@@ -156,7 +156,7 @@
             </p>
         </article>
 
-        <article class="crm-card p-6">
+        <x-crm.card class="p-6">
             <label class="space-y-1">
                 <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resolution Notes</span>
                 <textarea wire:model.live.debounce.300ms="resolution_notes" rows="4" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900"></textarea>
@@ -164,7 +164,7 @@
                     <span class="text-xs text-rose-600 dark:text-rose-300">{{ $message }}</span>
                 @enderror
             </label>
-        </article>
+        </x-crm.card>
 
         <div class="flex items-center justify-end gap-2">
             <a href="{{ route('cases.index') }}" wire:navigate class="crm-btn crm-btn-secondary">

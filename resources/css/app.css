@@ -106,6 +106,82 @@
         border-right-color: transparent;
         animation: livewire-button-spin 0.65s linear infinite;
     }
+
+    .crm-heading-with-icon {
+        @apply inline-flex items-center gap-2;
+    }
+
+    .crm-table-heading-icon {
+        @apply text-[0.78rem] text-slate-400 dark:text-slate-500;
+    }
+
+    .crm-label-with-icon {
+        @apply inline-flex items-center gap-2;
+    }
+
+    .crm-field-label-icon {
+        @apply text-slate-400 dark:text-slate-500;
+    }
+
+    .crm-input-icon-wrap {
+        @apply relative block;
+    }
+
+    .crm-input-icon {
+        @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400 dark:text-slate-500;
+    }
+
+    .crm-input-icon-wrap > .crm-iconized-field {
+        @apply pl-10;
+    }
+
+    .crm-select-autocomplete {
+        @apply relative;
+    }
+
+    .crm-select-autocomplete-native {
+        @apply pointer-events-none absolute h-px w-px overflow-hidden opacity-0;
+    }
+
+    .crm-select-autocomplete-input {
+        @apply pr-9 pl-10;
+    }
+
+    .crm-select-autocomplete-icon {
+        @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-sm text-slate-400 dark:text-slate-500;
+    }
+
+    .crm-select-autocomplete-caret {
+        @apply pointer-events-none absolute right-3 top-1/2 z-10 -translate-y-1/2 text-xs text-slate-400 dark:text-slate-500;
+    }
+
+    .crm-select-autocomplete-panel {
+        @apply invisible absolute z-50 mt-1 max-h-64 w-full overflow-auto rounded-xl border border-slate-200 bg-white opacity-0 shadow-xl transition dark:border-slate-700 dark:bg-slate-900;
+    }
+
+    .crm-select-autocomplete-panel.is-open {
+        @apply visible opacity-100;
+    }
+
+    .crm-select-autocomplete-list {
+        @apply py-1;
+    }
+
+    .crm-select-autocomplete-option {
+        @apply block w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800;
+    }
+
+    .crm-select-autocomplete-option.is-selected {
+        @apply font-semibold text-sky-700 dark:text-sky-300;
+    }
+
+    .crm-select-autocomplete-option.is-highlighted {
+        @apply bg-slate-100 dark:bg-slate-800;
+    }
+
+    .crm-select-autocomplete-empty {
+        @apply px-3 py-2 text-sm text-slate-500 dark:text-slate-400;
+    }
 }
 
 [data-flux-field]:not(ui-radio, ui-checkbox) {

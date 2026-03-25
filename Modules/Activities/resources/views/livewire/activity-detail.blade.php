@@ -14,7 +14,7 @@
         };
     @endphp
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $activity->subject }}</h2>
@@ -38,11 +38,16 @@
                         Cancel
                     </button>
                 @endif
+                @can('activities.delete')
+                    <button wire:click="delete" onclick="return confirm('Delete this activity?')" class="rounded-xl bg-rose-600 px-3 py-2 text-xs font-semibold text-white">
+                        Delete
+                    </button>
+                @endcan
             </div>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <dl class="grid gap-4 md:grid-cols-2">
             <div>
                 <dt class="text-xs uppercase tracking-wide text-slate-500">Due Date</dt>
@@ -83,9 +88,9 @@
                 <dd class="mt-1 whitespace-pre-wrap text-sm text-slate-900 dark:text-slate-100">{{ $activity->outcome ?? '—' }}</dd>
             </div>
         </dl>
-    </article>
+    </x-crm.card>
 
-    <article class="crm-card p-6">
+    <x-crm.card class="p-6">
         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Attendees</h3>
         <div class="mt-4 grid gap-2 sm:grid-cols-2">
             @forelse ($activity->attendees as $attendee)
@@ -96,5 +101,5 @@
                 <p class="text-sm text-slate-500 dark:text-slate-400">No attendees assigned.</p>
             @endforelse
         </div>
-    </article>
+    </x-crm.card>
 </section>

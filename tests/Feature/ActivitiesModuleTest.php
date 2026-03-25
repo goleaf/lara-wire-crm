@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Livewire\Livewire;
+use Modules\Activities\Livewire\ActivityDetail;
 use Modules\Activities\Livewire\ActivityForm;
 use Modules\Activities\Models\Activity;
 use Modules\Users\Models\Role;
@@ -59,7 +60,7 @@ test('users can create activity from livewire form', function () {
     ]);
 });
 
-test('complete endpoint marks activity completed', function () {
+test('livewire complete action marks activity completed', function () {
     $role = makeActivitiesRole();
 
     $user = User::factory()->create([
@@ -74,12 +75,39 @@ test('complete endpoint marks activity completed', function () {
         'owner_id' => $user->id,
     ]);
 
-    $this->actingAs($user)
-        ->patch(route('activities.complete', $activity->id))
-        ->assertRedirect();
+    $this->actingAs($user);
+
+    Livewire::test(ActivityDetail::class, ['id' => $activity->id])
+        ->call('markComplete');
 
     $activity->refresh();
 
     expect($activity->status)->toBe('Completed');
     expect($activity->completed_at)->not->toBeNull();
+});
+
+test('livewire delete action removes activity and redirects', function () {
+    $role = makeActivitiesRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $activity = Activity::query()->create([
+        'type' => 'Task',
+        'subject' => 'Delete me',
+        'status' => 'Planned',
+        'priority' => 'Normal',
+        'owner_id' => $user->id,
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(ActivityDetail::class, ['id' => $activity->id])
+        ->call('delete')
+        ->assertRedirectToRoute('activities.index');
+
+    $this->assertDatabaseMissing('activities', [
+        'id' => $activity->id,
+    ]);
 });
