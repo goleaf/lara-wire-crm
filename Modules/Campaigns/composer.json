@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/campaigns",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Campaigns\\": "app/",
+            "Modules\\Campaigns\\Livewire\\": "Livewire/",
+            "Modules\\Campaigns\\Database\\Factories\\": "database/factories/",
+            "Modules\\Campaigns\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Campaigns\\Tests\\": "tests/"
+        }
+    }
+}

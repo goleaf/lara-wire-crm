@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/deals",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Deals\\": "app/",
+            "Modules\\Deals\\Livewire\\": "Livewire/",
+            "Modules\\Deals\\Database\\Factories\\": "database/factories/",
+            "Modules\\Deals\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Deals\\Tests\\": "tests/"
+        }
+    }
+}

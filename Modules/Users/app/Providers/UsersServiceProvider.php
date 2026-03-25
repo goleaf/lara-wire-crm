@@ -2,8 +2,11 @@
 
 namespace Modules\Users\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Modules\Users\Http\Middleware\EnsureUserIsActive;
+use Modules\Users\Http\Middleware\PermissionMiddleware;
 use Nwidart\Modules\Support\ModuleServiceProvider;
-use Illuminate\Console\Scheduling\Schedule;
 
 class UsersServiceProvider extends ModuleServiceProvider
 {
@@ -34,13 +37,19 @@ class UsersServiceProvider extends ModuleServiceProvider
         RouteServiceProvider::class,
     ];
 
-    /**
-     * Define module schedules.
-     * 
-     * @param $schedule
-     */
-    // protected function configureSchedules(Schedule $schedule): void
-    // {
-    //     $schedule->command('inspire')->hourly();
-    // }
+    public function boot(): void
+    {
+        parent::boot();
+
+        $router = $this->app['router'];
+        $router->aliasMiddleware('active', EnsureUserIsActive::class);
+        $router->aliasMiddleware('permission', PermissionMiddleware::class);
+
+        $actions = ['view', 'create', 'edit', 'delete', 'export'];
+
+        foreach ($actions as $action) {
+            Gate::define($action, fn (User $user): bool => $user->hasPermission($action));
+            Gate::define("users.{$action}", fn (User $user): bool => $user->hasPermission($action) && $user->canAccessModule('users'));
+        }
+    }
 }

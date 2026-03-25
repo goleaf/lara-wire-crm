@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            
+            $table->uuid('id')->primary();
+            $table->string('name')->unique();
+            $table->boolean('can_view')->default(true);
+            $table->boolean('can_create')->default(true);
+            $table->boolean('can_edit')->default(true);
+            $table->boolean('can_delete')->default(true);
+            $table->boolean('can_export')->default(true);
+            $table->enum('record_visibility', ['own', 'team', 'all'])->default('own');
+            $table->json('module_access')->nullable();
             $table->timestamps();
         });
     }

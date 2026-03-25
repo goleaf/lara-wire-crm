@@ -49,6 +49,35 @@
             </div>
         </form>
 
+        @php
+            $demoUsers = collect(config('crm.demo_login_users', []))->take(5);
+            $demoPassword = (string) config('crm.demo_login_password', 'password123');
+        @endphp
+
+        @if ($demoUsers->isNotEmpty())
+            <div class="overflow-hidden rounded-lg border border-slate-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-900/70">
+                <div class="border-b border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 dark:border-zinc-800 dark:text-zinc-100">
+                    Demo Users
+                </div>
+                <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-zinc-800">
+                    <thead class="bg-slate-50 dark:bg-zinc-900">
+                        <tr>
+                            <th class="px-4 py-2 text-left font-medium text-slate-600 dark:text-zinc-300">Email</th>
+                            <th class="px-4 py-2 text-left font-medium text-slate-600 dark:text-zinc-300">Password</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-zinc-800">
+                        @foreach ($demoUsers as $demoUser)
+                            <tr class="odd:bg-white even:bg-slate-50/60 dark:odd:bg-zinc-950 dark:even:bg-zinc-900/70">
+                                <td class="px-4 py-2 font-mono text-slate-800 dark:text-zinc-100">{{ $demoUser['email'] }}</td>
+                                <td class="px-4 py-2 font-mono text-slate-800 dark:text-zinc-100">{{ $demoPassword }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
         @if (Route::has('register'))
             <div class="space-x-1 text-sm text-center rtl:space-x-reverse text-zinc-600 dark:text-zinc-400">
                 <span>{{ __('Don\'t have an account?') }}</span>

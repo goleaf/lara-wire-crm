@@ -1,4 +1,18 @@
 {
     "Core": true,
-    "Users": true
+    "Users": true,
+    "Files": true,
+    "Products": true,
+    "Notifications": true,
+    "Contacts": true,
+    "Leads": true,
+    "Deals": true,
+    "Activities": true,
+    "Calendar": true,
+    "Messaging": true,
+    "Quotes": true,
+    "Invoices": true,
+    "Campaigns": true,
+    "Cases": true,
+    "Reports": true
 }
