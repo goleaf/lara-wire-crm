@@ -3,6 +3,7 @@
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Livewire\Livewire;
+use Modules\Calendar\Livewire\CalendarView;
 use Modules\Calendar\Livewire\EventForm;
 use Modules\Calendar\Models\CalendarEvent;
 use Modules\Users\Models\Role;
@@ -28,10 +29,12 @@ test('authorized users can open calendar page', function () {
         'role_id' => $role->id,
     ]);
 
-    $this->actingAs($user)
-        ->get(route('calendar.index'))
-        ->assertOk()
-        ->assertSee('Calendar');
+    $this->actingAs($user);
+
+    Livewire::test(CalendarView::class)
+        ->assertSet('view', 'month')
+        ->assertViewHas('rangeFrom')
+        ->assertViewHas('rangeTo');
 });
 
 test('event form creates calendar event', function () {
@@ -59,14 +62,14 @@ test('event form creates calendar event', function () {
     ]);
 });
 
-test('calendar events endpoint returns matching range', function () {
+test('calendar view exposes range events for the visible period', function () {
     $role = makeCalendarRole();
 
     $user = User::factory()->create([
         'role_id' => $role->id,
     ]);
 
-    $event = CalendarEvent::query()->create([
+    $eventInRange = CalendarEvent::query()->create([
         'title' => 'Weekly planning',
         'type' => 'Meeting',
         'start_at' => now()->addDay()->setTime(11, 0),
@@ -76,16 +79,26 @@ test('calendar events endpoint returns matching range', function () {
         'recurrence' => 'None',
     ]);
 
-    $this->actingAs($user)
-        ->get(route('calendar.events', [
-            'from' => now()->toDateString(),
-            'to' => now()->addDays(7)->toDateString(),
-        ]))
-        ->assertOk()
-        ->assertJsonFragment([
-            'id' => $event->id,
-            'title' => 'Weekly planning',
-        ]);
+    $eventOutOfRange = CalendarEvent::query()->create([
+        'title' => 'Far roadmap sync',
+        'type' => 'Meeting',
+        'start_at' => now()->addMonths(2)->setTime(11, 0),
+        'end_at' => now()->addMonths(2)->setTime(12, 0),
+        'organizer_id' => $user->id,
+        'status' => 'Scheduled',
+        'recurrence' => 'None',
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(CalendarView::class, [
+        'view' => 'week',
+        'date' => now()->toDateString(),
+    ])->assertViewHas('rangeEvents', function (array $rangeEvents) use ($eventInRange, $eventOutOfRange): bool {
+        $eventIds = collect($rangeEvents)->pluck('id');
+
+        return $eventIds->contains($eventInRange->id) && ! $eventIds->contains($eventOutOfRange->id);
+    });
 });
 
 test('calendar recurring events handle immutable carbon dates safely', function () {
@@ -130,8 +143,12 @@ test('calendar month view shows event titles for visible days', function () {
         'color' => '#0ea5e9',
     ]);
 
-    $this->actingAs($user)
-        ->get(route('calendar.index'))
-        ->assertOk()
-        ->assertSee('Quarterly planning review');
+    $this->actingAs($user);
+
+    Livewire::test(CalendarView::class, [
+        'view' => 'month',
+        'date' => now()->toDateString(),
+    ])->assertViewHas('eventsByDate', function ($eventsByDate): bool {
+        return $eventsByDate->flatten()->contains(fn ($event) => $event->title === 'Quarterly planning review');
+    });
 });
