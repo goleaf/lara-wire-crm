@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 @source '../views';
 @source '../../Modules/**/*.blade.php';
@@ -45,6 +46,65 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+@keyframes livewire-button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@layer components {
+    .crm-card {
+        @apply rounded-3xl border border-white/70 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/40;
+    }
+
+    .crm-btn {
+        @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950;
+    }
+
+    .crm-btn-primary {
+        @apply bg-sky-600 text-white hover:bg-sky-500 focus-visible:ring-sky-500;
+    }
+
+    .crm-btn-secondary {
+        @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800;
+    }
+
+    .crm-btn-danger {
+        @apply border border-rose-300 bg-rose-50 text-rose-700 hover:bg-rose-100 focus-visible:ring-rose-500 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/20;
+    }
+
+    [data-livewire-action="1"] {
+        position: relative;
+        transition: transform 160ms ease, opacity 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+    }
+
+    [data-livewire-action="1"].is-livewire-active,
+    [data-livewire-action="1"][data-loading] {
+        transform: translateY(1px) scale(0.99);
+        filter: saturate(0.95);
+    }
+
+    [data-livewire-action="1"][data-loading] {
+        cursor: wait;
+        pointer-events: none;
+        opacity: 0.86;
+        padding-right: 2rem;
+    }
+
+    [data-livewire-action="1"][data-loading]::after {
+        content: '';
+        position: absolute;
+        top: calc(50% - 0.45rem);
+        right: 0.7rem;
+        width: 0.9rem;
+        height: 0.9rem;
+        border-radius: 9999px;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        animation: livewire-button-spin 0.65s linear infinite;
     }
 }
 

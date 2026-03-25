@@ -34,21 +34,23 @@ class ReportSeeder extends Seeder
         ];
 
         foreach ($reports as $report) {
+            $isScheduled = in_array($report['type'], ['Line', 'Bar', 'KPI'], true);
+
             Report::query()->updateOrCreate(
                 ['name' => $report['name']],
                 [
                     'description' => $report['name'].' (seeded report)',
                     'type' => $report['type'],
                     'module' => $report['module'],
-                    'filters' => [],
-                    'group_by' => $report['group_by'],
+                    'filters' => ['owner_scope' => 'all'],
+                    'group_by' => $report['group_by'] ?? 'created_at',
                     'metrics' => $report['metrics'],
                     'date_field' => 'created_at',
-                    'date_range' => 'This Month',
-                    'custom_date_from' => null,
-                    'custom_date_to' => null,
-                    'is_scheduled' => false,
-                    'schedule_frequency' => null,
+                    'date_range' => 'Custom',
+                    'custom_date_from' => now()->subDays(30)->toDateString(),
+                    'custom_date_to' => now()->toDateString(),
+                    'is_scheduled' => $isScheduled,
+                    'schedule_frequency' => $isScheduled ? 'Weekly' : null,
                     'owner_id' => $ownerId,
                     'is_public' => true,
                 ]

@@ -42,11 +42,11 @@ class DealFactory extends Factory
             'currency' => config('crm.default_currency.code', 'USD'),
             'probability' => $stage->probability,
             'expected_revenue' => 0,
-            'close_date' => fake()->optional()->date(),
+            'close_date' => fake()->date(),
             'deal_type' => fake()->randomElement(['New Business', 'Renewal', 'Upsell', 'Cross-sell']),
             'lost_reason' => null,
             'lost_notes' => null,
-            'source' => fake()->optional()->randomElement(['Referral', 'Event', 'Inbound']),
+            'source' => fake()->randomElement(['Referral', 'Event', 'Inbound']),
             'closed_at' => null,
         ];
     }

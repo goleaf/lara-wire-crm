@@ -45,20 +45,31 @@ class SupportCaseSeeder extends Seeder
                 'deal_id' => $deals->isNotEmpty() ? $deals->random()->id : null,
                 'owner_id' => $owners->random()->id,
                 'channel' => $channels[array_rand($channels)],
-                'resolution_notes' => null,
+                'resolution_notes' => 'Resolution notes prepared for support workflow demo.',
             ]);
 
             if ($status === 'Resolved') {
                 $supportCase->forceFill([
+                    'first_response_at' => now()->subHours(random_int(20, 72)),
                     'resolved_at' => now()->subHours(random_int(1, 18)),
+                    'satisfaction_score' => random_int(3, 5),
                 ])->saveQuietly();
             }
 
             if ($status === 'Closed') {
                 $supportCase->forceFill([
+                    'first_response_at' => now()->subHours(random_int(24, 84)),
                     'resolved_at' => now()->subHours(random_int(12, 32)),
                     'closed_at' => now()->subHours(random_int(1, 11)),
                     'satisfaction_score' => random_int(3, 5),
+                ])->saveQuietly();
+
+                continue;
+            }
+
+            if (in_array($status, ['Open', 'In Progress', 'Pending'], true)) {
+                $supportCase->forceFill([
+                    'first_response_at' => now()->subHours(random_int(1, 48)),
                 ])->saveQuietly();
             }
         }

@@ -29,24 +29,46 @@ class CalendarEventSeeder extends Seeder
             ? Deal::query()->select(['id'])->limit(20)->get()
             : collect();
 
-        CalendarEvent::factory()
+        if ($contacts->isEmpty() || $deals->isEmpty()) {
+            return;
+        }
+
+        $events = CalendarEvent::factory()
             ->count(20)
-            ->make()
-            ->each(function (CalendarEvent $event) use ($contacts, $deals, $owners): void {
-                $event->organizer_id = (string) $owners->random()->id;
-                $event->contact_id = $contacts->isNotEmpty() && fake()->boolean(40) ? (string) $contacts->random()->id : null;
-                $event->deal_id = $deals->isNotEmpty() && fake()->boolean(40) ? (string) $deals->random()->id : null;
-                $event->save();
+            ->state(function () use ($contacts, $deals, $owners): array {
+                $start = now()->addHours(random_int(6, 420));
+                $duration = random_int(30, 180);
 
-                $attendeeIds = $owners
-                    ->pluck('id')
-                    ->reject(fn (string $id): bool => $id === $event->organizer_id)
-                    ->shuffle()
-                    ->take(fake()->numberBetween(0, 3))
-                    ->values()
-                    ->all();
+                return [
+                    'organizer_id' => (string) $owners->random()->id,
+                    'title' => fake()->sentence(3),
+                    'type' => fake()->randomElement(['Meeting', 'Demo', 'Follow-up', 'Reminder', 'Other']),
+                    'start_at' => $start,
+                    'end_at' => $start->copy()->addMinutes($duration),
+                    'all_day' => false,
+                    'location' => fake()->streetAddress(),
+                    'description' => fake()->paragraph(),
+                    'contact_id' => (string) $contacts->random()->id,
+                    'deal_id' => (string) $deals->random()->id,
+                    'reminder_minutes' => fake()->randomElement([5, 15, 30, 60, 1440]),
+                    'recurrence' => fake()->randomElement(['None', 'Daily', 'Weekly', 'Monthly']),
+                    'recurrence_end_date' => now()->addMonths(2)->toDateString(),
+                    'status' => fake()->randomElement(['Scheduled', 'Completed', 'Cancelled']),
+                    'color' => fake()->randomElement(['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#64748b']),
+                ];
+            })
+            ->create();
 
-                $event->attendees()->sync($attendeeIds);
-            });
+        $events->each(function (CalendarEvent $event) use ($owners): void {
+            $attendeeIds = $owners
+                ->pluck('id')
+                ->reject(fn (string $id): bool => $id === $event->organizer_id)
+                ->shuffle()
+                ->take(random_int(1, min(3, max(1, $owners->count() - 1))))
+                ->values()
+                ->all();
+
+            $event->attendees()->sync($attendeeIds);
+        });
     }
 }

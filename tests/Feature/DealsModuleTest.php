@@ -156,3 +156,42 @@ test('mark won endpoint moves deal to closed won stage', function () {
     expect($deal->stage_id)->toBe($won->id);
     expect($deal->closed_at)->not->toBeNull();
 });
+
+test('deal create page shows product table column headers', function () {
+    $role = makeDealsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('deals.create'))
+        ->assertOk()
+        ->assertSee('Products')
+        ->assertSee('Product')
+        ->assertSee('Qty')
+        ->assertSee('Unit Price')
+        ->assertSee('Discount %')
+        ->assertSee('Line Total')
+        ->assertSee('Actions');
+});
+
+test('deal create page renders autocomplete dropdown inputs', function () {
+    $role = makeDealsRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('deals.create'))
+        ->assertOk()
+        ->assertSee('Type to search account...')
+        ->assertSee('Type to search contact...')
+        ->assertSee('Type to search owner...')
+        ->assertSee('Type to search pipeline...')
+        ->assertSee('Type to search stage...')
+        ->assertSee('Type to search deal type...')
+        ->assertSee('Type to search product...')
+        ->assertSee('deal-account-options');
+});

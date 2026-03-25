@@ -84,3 +84,15 @@ test('users seeder creates five demo users with shared password', function () {
         expect(Hash::check('password123', (string) $seededUser?->password))->toBeTrue();
     }
 });
+
+test('profile page includes appearance theme switcher', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get(route('users.profile'))
+        ->assertOk()
+        ->assertSee('Appearance')
+        ->assertSee('Light')
+        ->assertSee('Dark')
+        ->assertSee('x-model="$flux.appearance"', false);
+});

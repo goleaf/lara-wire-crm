@@ -4,7 +4,6 @@ namespace Modules\Messaging\Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Modules\Messaging\Models\Channel;
 use Modules\Messaging\Models\Message;
 
@@ -20,12 +19,15 @@ class MessageFactory extends Factory
      */
     public function definition(): array
     {
+        $channelId = Channel::query()->value('id') ?? Channel::factory()->create()->getKey();
+        $senderId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
-            'channel_id' => Channel::query()->value('id') ?? Str::uuid()->toString(),
-            'sender_id' => User::query()->value('id') ?? Str::uuid()->toString(),
+            'channel_id' => (string) $channelId,
+            'sender_id' => (string) $senderId,
             'body' => $this->faker->sentence(),
             'sent_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
-            'edited_at' => null,
+            'edited_at' => $this->faker->dateTimeBetween('-6 days', 'now'),
             'is_deleted' => false,
             'parent_message_id' => null,
         ];

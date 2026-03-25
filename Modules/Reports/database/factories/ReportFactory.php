@@ -18,21 +18,23 @@ class ReportFactory extends Factory
      */
     public function definition(): array
     {
+        $ownerId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
             'name' => fake()->sentence(3),
-            'description' => fake()->optional()->sentence(10),
+            'description' => fake()->sentence(10),
             'type' => fake()->randomElement(['Table', 'Bar', 'Line', 'Funnel', 'Pie', 'KPI', 'Area']),
             'module' => fake()->randomElement(['Deals', 'Contacts', 'Leads', 'Activities', 'Cases', 'Campaigns', 'Invoices', 'Quotes', 'Products']),
-            'filters' => [],
-            'group_by' => null,
-            'metrics' => ['count'],
+            'filters' => ['owner_scope' => 'all'],
+            'group_by' => 'created_at',
+            'metrics' => ['count', 'sum'],
             'date_field' => 'created_at',
-            'date_range' => 'This Month',
-            'custom_date_from' => null,
-            'custom_date_to' => null,
-            'is_scheduled' => false,
-            'schedule_frequency' => null,
-            'owner_id' => User::query()->value('id'),
+            'date_range' => 'Custom',
+            'custom_date_from' => now()->subDays(30)->toDateString(),
+            'custom_date_to' => now()->toDateString(),
+            'is_scheduled' => true,
+            'schedule_frequency' => fake()->randomElement(['Daily', 'Weekly', 'Monthly']),
+            'owner_id' => (string) $ownerId,
             'is_public' => false,
         ];
     }

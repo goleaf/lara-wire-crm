@@ -4,9 +4,12 @@ namespace Modules\Core\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
+use Modules\Core\Enums\CurrencyCode;
+use Modules\Core\Enums\CurrencySymbol;
 use Modules\Core\Models\Setting;
 
 class Settings extends Component
@@ -73,10 +76,13 @@ class Settings extends Component
     {
         abort_unless(auth()->user()?->hasPermission('edit'), 403);
 
+        $this->currency_code = strtoupper((string) $this->currency_code);
+        $this->currency_symbol = trim((string) $this->currency_symbol);
+
         $validated = $this->validate([
             'app_name' => ['required', 'string', 'max:255'],
-            'currency_symbol' => ['required', 'string', 'max:5'],
-            'currency_code' => ['required', 'string', 'max:5'],
+            'currency_symbol' => ['required', Rule::in(CurrencySymbol::values())],
+            'currency_code' => ['required', Rule::in(CurrencyCode::values())],
             'timezone' => ['required', 'string', 'max:120'],
             'date_format' => ['required', 'in:d/m/Y,m/d/Y,Y-m-d'],
             'pagination_size' => ['required', 'integer', 'in:10,15,25,50'],
@@ -126,19 +132,73 @@ class Settings extends Component
         $this->currency_code = $currencyCode;
         $this->currency_symbol = $currencySymbol;
 
+        config([
+            'app.name' => $validated['app_name'],
+            'app.timezone' => $validated['timezone'],
+            'crm.app_name' => $validated['app_name'],
+            'crm.timezone' => $validated['timezone'],
+            'crm.date_format' => $validated['date_format'],
+            'crm.pagination_size' => (int) $validated['pagination_size'],
+            'crm.currency.code' => $currencyCode,
+            'crm.currency.symbol' => $currencySymbol,
+            'crm.default_currency.code' => $currencyCode,
+            'crm.default_currency.symbol' => $currencySymbol,
+            'crm.default_currency_code' => $currencyCode,
+            'crm.company' => [
+                'name' => $validated['company_name'] ?? '',
+                'address' => $validated['company_address'] ?? '',
+                'phone' => $validated['company_phone'] ?? '',
+                'email' => $validated['company_email'] ?? '',
+                'logo' => $this->logo_path ?? '',
+                'vat' => $validated['company_vat'] ?? '',
+                'vat_number' => $validated['company_vat'] ?? '',
+                'bank_details' => [
+                    'account_name' => $validated['bank_account_name'] ?? '',
+                    'iban' => $validated['bank_iban'] ?? '',
+                    'swift' => $validated['bank_swift'] ?? '',
+                ],
+            ],
+        ]);
+
         $this->dispatch('flash', type: 'success', message: 'Settings updated.');
     }
 
     public function render(): View
     {
         return view('core::livewire.settings', [
+            'currencyCodes' => CurrencyCode::values(),
+            'currencySymbols' => CurrencySymbol::values(),
             'dateFormats' => [
                 'd/m/Y' => 'DD/MM/YYYY',
                 'm/d/Y' => 'MM/DD/YYYY',
                 'Y-m-d' => 'YYYY-MM-DD',
             ],
+            'moduleStatuses' => $this->getModuleStatuses(),
             'paginationSizes' => [10, 15, 25, 50],
             'timezones' => timezone_identifiers_list(),
         ])->extends('core::layouts.module', ['title' => 'Settings']);
+    }
+
+    /**
+     * @return array<string, bool>
+     */
+    private function getModuleStatuses(): array
+    {
+        $path = base_path('modules_statuses.json');
+
+        if (! is_file($path)) {
+            return [];
+        }
+
+        $decoded = json_decode((string) file_get_contents($path), true);
+
+        if (! is_array($decoded)) {
+            return [];
+        }
+
+        return collect($decoded)
+            ->filter(fn (mixed $enabled): bool => is_bool($enabled))
+            ->map(fn (bool $enabled): bool => $enabled)
+            ->all();
     }
 }

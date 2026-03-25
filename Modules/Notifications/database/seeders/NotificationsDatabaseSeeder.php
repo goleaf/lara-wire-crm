@@ -11,6 +11,8 @@ class NotificationsDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            CrmNotificationSeeder::class,
+        ]);
     }
 }

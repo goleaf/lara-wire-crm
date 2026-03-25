@@ -26,6 +26,13 @@ class ContactSeeder extends Seeder
             ->state(fn (): array => [
                 'owner_id' => $owner->id,
                 'account_id' => fake()->randomElement($accountIds),
+                'email' => fake()->unique()->safeEmail(),
+                'phone' => fake()->phoneNumber(),
+                'mobile' => fake()->phoneNumber(),
+                'job_title' => fake()->jobTitle(),
+                'department' => fake()->word(),
+                'birthday' => fake()->date(),
+                'notes' => fake()->paragraph(),
             ])
             ->create();
     }

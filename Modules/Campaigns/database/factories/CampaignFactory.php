@@ -29,7 +29,7 @@ class CampaignFactory extends Factory
             'target_audience' => fake()->sentence(),
             'expected_leads' => fake()->numberBetween(10, 120),
             'description' => fake()->paragraph(),
-            'owner_id' => User::query()->value('id'),
+            'owner_id' => User::query()->value('id') ?? User::factory(),
         ];
     }
 }

@@ -27,7 +27,7 @@ class ProductFactory extends Factory
         return [
             'name' => Str::title($name),
             'sku' => 'SKU-'.Str::upper(Str::substr(Str::slug($name, ''), 0, 8)).fake()->numerify('##'),
-            'description' => fake()->optional()->sentence(),
+            'description' => fake()->paragraph(),
             'unit_price' => $unitPrice,
             'cost_price' => $costPrice,
             'currency' => config('crm.default_currency_code', 'USD'),

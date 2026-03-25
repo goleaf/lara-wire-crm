@@ -59,7 +59,13 @@ class CoreServiceProvider extends ModuleServiceProvider
 
     private function applyRuntimeSettings(): void
     {
-        if (! Schema::hasTable('settings')) {
+        try {
+            $hasSettingsTable = Schema::hasTable('settings');
+        } catch (Throwable) {
+            $hasSettingsTable = false;
+        }
+
+        if (! $hasSettingsTable) {
             config([
                 'app.name' => config('crm.app_name', config('app.name')),
                 'app.timezone' => config('crm.timezone', config('app.timezone')),

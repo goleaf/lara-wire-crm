@@ -33,7 +33,7 @@ class QuoteLineItemSeeder extends Seeder
                     $quote->lineItems()->create([
                         'product_id' => $product?->id,
                         'name' => $product?->name ?? 'Custom Item',
-                        'description' => $product?->description ?? null,
+                        'description' => $product?->description ?? 'Custom seeded line item',
                         'quantity' => $quantity,
                         'unit_price' => $unitPrice,
                         'discount_percent' => $discount,

@@ -21,9 +21,9 @@ class LeadFactory extends Factory
         return [
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
-            'company' => fake()->optional()->company(),
-            'email' => fake()->optional()->safeEmail(),
-            'phone' => fake()->optional()->phoneNumber(),
+            'company' => fake()->company(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
             'lead_source' => fake()->randomElement(['Walk-in', 'Cold Call', 'Referral', 'Internal Form', 'Event', 'Other']),
             'status' => fake()->randomElement(['New', 'Contacted', 'Qualified', 'Unqualified']),
             'score' => fake()->numberBetween(5, 90),
@@ -34,7 +34,7 @@ class LeadFactory extends Factory
             'converted_to_contact_id' => null,
             'converted_to_deal_id' => null,
             'converted_at' => null,
-            'description' => fake()->optional()->sentence(),
+            'description' => fake()->paragraph(),
         ];
     }
 }

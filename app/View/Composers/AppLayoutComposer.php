@@ -3,7 +3,6 @@
 namespace App\View\Composers;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AppLayoutComposer
@@ -15,36 +14,36 @@ class AppLayoutComposer
 
         $groups = [
             'Sales' => [
-                ['label' => 'Dashboard', 'route' => 'dashboard'],
-                ['label' => 'Leads', 'route' => 'leads.index'],
-                ['label' => 'Deals', 'route' => 'deals.index'],
-                ['label' => 'Contacts', 'route' => 'contacts.index'],
-                ['label' => 'Accounts', 'route' => 'accounts.index'],
+                ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'fa-solid fa-gauge-high'],
+                ['label' => 'Leads', 'route' => 'leads.index', 'icon' => 'fa-solid fa-bullseye'],
+                ['label' => 'Deals', 'route' => 'deals.index', 'icon' => 'fa-solid fa-handshake'],
+                ['label' => 'Contacts', 'route' => 'contacts.index', 'icon' => 'fa-solid fa-address-book'],
+                ['label' => 'Accounts', 'route' => 'accounts.index', 'icon' => 'fa-solid fa-building'],
             ],
             'Work' => [
-                ['label' => 'Activities', 'route' => 'activities.mine'],
-                ['label' => 'Calendar', 'route' => 'calendar.index'],
-                ['label' => 'Messages', 'route' => 'messages.index'],
+                ['label' => 'Activities', 'route' => 'activities.mine', 'icon' => 'fa-solid fa-list-check'],
+                ['label' => 'Calendar', 'route' => 'calendar.index', 'icon' => 'fa-solid fa-calendar-days'],
+                ['label' => 'Messages', 'route' => 'messages.index', 'icon' => 'fa-solid fa-comments'],
             ],
             'Finance' => [
-                ['label' => 'Quotes', 'route' => 'quotes.index'],
-                ['label' => 'Invoices', 'route' => 'invoices.index'],
+                ['label' => 'Quotes', 'route' => 'quotes.index', 'icon' => 'fa-solid fa-file-signature'],
+                ['label' => 'Invoices', 'route' => 'invoices.index', 'icon' => 'fa-solid fa-file-invoice-dollar'],
             ],
             'Marketing' => [
-                ['label' => 'Campaigns', 'route' => 'campaigns.index'],
+                ['label' => 'Campaigns', 'route' => 'campaigns.index', 'icon' => 'fa-solid fa-bullhorn'],
             ],
             'Support' => [
-                ['label' => 'Cases', 'route' => 'cases.index'],
+                ['label' => 'Cases', 'route' => 'cases.index', 'icon' => 'fa-solid fa-life-ring'],
             ],
             'Admin' => $isAdminOrManager ? [
-                ['label' => 'Products', 'route' => 'products.index'],
-                ['label' => 'Reports', 'route' => 'reports.index'],
-                ['label' => 'Users', 'route' => 'users.index'],
-                ['label' => 'Roles', 'route' => 'roles.index'],
-                ['label' => 'Teams', 'route' => 'teams.index'],
-                ['label' => 'Files', 'route' => 'files.index'],
-                ['label' => 'Settings', 'route' => 'core.settings'],
-                ['label' => 'Audit Logs', 'route' => 'core.audit-logs'],
+                ['label' => 'Products', 'route' => 'products.index', 'icon' => 'fa-solid fa-box-open'],
+                ['label' => 'Reports', 'route' => 'reports.index', 'icon' => 'fa-solid fa-chart-line'],
+                ['label' => 'Users', 'route' => 'users.index', 'icon' => 'fa-solid fa-users'],
+                ['label' => 'Roles', 'route' => 'roles.index', 'icon' => 'fa-solid fa-user-shield'],
+                ['label' => 'Teams', 'route' => 'teams.index', 'icon' => 'fa-solid fa-people-group'],
+                ['label' => 'Files', 'route' => 'files.index', 'icon' => 'fa-solid fa-folder-open'],
+                ['label' => 'Settings', 'route' => 'core.settings', 'icon' => 'fa-solid fa-gear'],
+                ['label' => 'Audit Logs', 'route' => 'core.audit-logs', 'icon' => 'fa-solid fa-clipboard-list'],
             ] : [],
         ];
 
@@ -60,11 +59,7 @@ class AppLayoutComposer
                         return [
                             'active' => request()->routeIs($pattern),
                             'href' => route($item['route']),
-                            'initials' => Str::of($item['label'])
-                                ->explode(' ')
-                                ->take(2)
-                                ->map(fn (string $word): string => Str::upper(Str::substr($word, 0, 1)))
-                                ->implode(''),
+                            'icon' => $item['icon'] ?? 'fa-solid fa-circle',
                             'label' => $item['label'],
                         ];
                     })

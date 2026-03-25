@@ -50,6 +50,7 @@ class InvoiceSeeder extends Seeder
                 'discount_type' => 'Percentage',
                 'discount_value' => random_int(0, 10),
                 'currency' => config('crm.default_currency.code', 'USD'),
+                'pdf_path' => 'crm-pdfs/invoices/invoice-'.$index.'.pdf',
             ]);
 
             $lineCount = random_int(1, 3);
@@ -64,7 +65,7 @@ class InvoiceSeeder extends Seeder
                 $invoice->lineItems()->create([
                     'product_id' => $product?->id,
                     'name' => $product?->name ?? 'Service Line '.($line + 1),
-                    'description' => null,
+                    'description' => 'Seeded line item '.($line + 1),
                     'quantity' => $quantity,
                     'unit_price' => $unitPrice,
                     'discount_percent' => $discount,
@@ -82,7 +83,7 @@ class InvoiceSeeder extends Seeder
                     'paid_at' => now()->subDays(random_int(0, 7))->toDateString(),
                     'method' => 'Bank Transfer',
                     'reference' => 'SEED-PAID-'.$index,
-                    'notes' => null,
+                    'notes' => 'Paid in full using seeded data.',
                     'recorded_by' => $invoice->owner_id,
                 ]);
             }
@@ -93,7 +94,7 @@ class InvoiceSeeder extends Seeder
                     'paid_at' => now()->subDays(random_int(0, 7))->toDateString(),
                     'method' => 'Cash',
                     'reference' => 'SEED-PART-'.$index,
-                    'notes' => null,
+                    'notes' => 'Partial payment seeded for aging demo.',
                     'recorded_by' => $invoice->owner_id,
                 ]);
             }

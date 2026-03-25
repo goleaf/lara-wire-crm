@@ -19,7 +19,7 @@ class ProductCategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->words(2, true),
-            'description' => fake()->optional()->sentence(),
+            'description' => fake()->sentence(),
             'parent_id' => null,
         ];
     }

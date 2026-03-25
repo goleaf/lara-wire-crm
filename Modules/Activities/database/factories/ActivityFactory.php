@@ -20,16 +20,16 @@ class ActivityFactory extends Factory
     public function definition(): array
     {
         $status = fake()->randomElement(['Planned', 'Planned', 'Completed', 'Cancelled']);
-        $dueDate = fake()->optional()->dateTimeBetween('-5 days', '+10 days');
+        $dueDate = fake()->dateTimeBetween('-5 days', '+10 days');
 
         return [
             'type' => fake()->randomElement(['Meeting', 'Task', 'Note', 'SMS']),
             'subject' => fake()->sentence(4),
-            'description' => fake()->optional()->sentence(),
+            'description' => fake()->paragraph(),
             'status' => $status,
             'priority' => fake()->randomElement(['Low', 'Normal', 'High']),
             'due_date' => $dueDate,
-            'duration_minutes' => fake()->optional()->randomElement([15, 30, 60, 120]),
+            'duration_minutes' => fake()->randomElement([15, 30, 60, 120]),
             'outcome' => $status === 'Completed' ? fake()->sentence() : null,
             'related_to_type' => null,
             'related_to_id' => null,

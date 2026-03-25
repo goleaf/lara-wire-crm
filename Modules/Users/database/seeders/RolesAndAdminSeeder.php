@@ -5,6 +5,7 @@ namespace Modules\Users\Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Modules\Users\Models\Role;
 
 class RolesAndAdminSeeder extends Seeder
@@ -85,7 +86,9 @@ class RolesAndAdminSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role_id' => $adminRole->getKey(),
                 'is_active' => true,
+                'last_login' => now()->subDay(),
                 'quota' => 0,
+                'avatar_path' => 'avatars/system-admin.png',
             ]
         );
 
@@ -96,14 +99,18 @@ class RolesAndAdminSeeder extends Seeder
         $demoUsers
             ->filter(fn (array $demoUser): bool => filled($demoUser['email'] ?? null))
             ->each(function (array $demoUser) use ($defaultUserRole, $demoPassword): void {
+                $email = (string) $demoUser['email'];
+
                 User::query()->updateOrCreate(
-                    ['email' => $demoUser['email']],
+                    ['email' => $email],
                     [
                         'full_name' => $demoUser['full_name'] ?? 'Demo User',
                         'password' => Hash::make($demoPassword),
                         'role_id' => $defaultUserRole->getKey(),
                         'is_active' => true,
+                        'last_login' => now()->subMinutes(random_int(5, 600)),
                         'quota' => 0,
+                        'avatar_path' => 'avatars/'.Str::slug(Str::before($email, '@')).'.png',
                     ]
                 );
             });

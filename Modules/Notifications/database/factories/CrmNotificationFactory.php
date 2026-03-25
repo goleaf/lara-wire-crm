@@ -18,16 +18,19 @@ class CrmNotificationFactory extends Factory
      */
     public function definition(): array
     {
+        $isRead = fake()->boolean(40);
+        $userId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
-            'user_id' => User::factory(),
-            'type' => fake()->randomElement(['Reminder', 'Mention', 'Assignment', 'Deal Update', 'Other']),
+            'user_id' => (string) $userId,
+            'type' => fake()->randomElement(['Reminder', 'Mention', 'Assignment', 'SLA Breach', 'Deal Update', 'Task Due', 'Case Update', 'Payment Recorded', 'Quote Accepted', 'Other']),
             'title' => fake()->sentence(4),
-            'body' => fake()->optional()->sentence(),
-            'is_read' => fake()->boolean(40),
-            'read_at' => null,
-            'related_to_type' => null,
-            'related_to_id' => null,
-            'action_url' => fake()->optional()->url(),
+            'body' => fake()->paragraph(),
+            'is_read' => $isRead,
+            'read_at' => $isRead ? now()->subMinutes(fake()->numberBetween(1, 600)) : null,
+            'related_to_type' => User::class,
+            'related_to_id' => (string) $userId,
+            'action_url' => '/dashboard',
         ];
     }
 }

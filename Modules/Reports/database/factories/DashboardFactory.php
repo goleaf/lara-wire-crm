@@ -18,9 +18,11 @@ class DashboardFactory extends Factory
      */
     public function definition(): array
     {
+        $ownerId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
             'name' => fake()->words(2, true),
-            'owner_id' => User::query()->value('id'),
+            'owner_id' => (string) $ownerId,
             'is_default' => false,
             'is_public' => false,
             'layout' => [],

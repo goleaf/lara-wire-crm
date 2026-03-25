@@ -26,7 +26,10 @@ class DashboardSeeder extends Seeder
             [
                 'name' => 'Default Dashboard',
                 'is_public' => true,
-                'layout' => [],
+                'layout' => [
+                    'columns' => 12,
+                    'rowHeight' => 110,
+                ],
             ]
         );
 
@@ -43,6 +46,7 @@ class DashboardSeeder extends Seeder
             ->select(['id', 'name'])
             ->where('name', 'Revenue by Month')
             ->first();
+        $fallbackReportId = (string) ($reportForChart?->id ?? Report::query()->value('id'));
 
         foreach ($widgetTemplates as $index => $widgetTemplate) {
             DashboardWidget::query()->updateOrCreate(
@@ -52,7 +56,7 @@ class DashboardSeeder extends Seeder
                     'position_y' => $widgetTemplate['position_y'],
                 ],
                 [
-                    'report_id' => $widgetTemplate['widget_type'] === 'ReportChart' ? $reportForChart?->id : null,
+                    'report_id' => $widgetTemplate['widget_type'] === 'ReportChart' ? $reportForChart?->id : $fallbackReportId,
                     'widget_type' => $widgetTemplate['widget_type'],
                     'title' => $widgetTemplate['title'],
                     'width' => $widgetTemplate['width'],

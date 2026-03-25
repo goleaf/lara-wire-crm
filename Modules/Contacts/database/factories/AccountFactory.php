@@ -22,9 +22,9 @@ class AccountFactory extends Factory
             'name' => fake()->company(),
             'industry' => fake()->randomElement(['Technology', 'Finance', 'Retail', 'Healthcare', 'Manufacturing', 'Education', 'Real Estate', 'Other']),
             'type' => fake()->randomElement(['Customer', 'Partner', 'Prospect', 'Vendor']),
-            'website' => fake()->optional()->url(),
-            'phone' => fake()->optional()->phoneNumber(),
-            'email' => fake()->optional()->safeEmail(),
+            'website' => fake()->url(),
+            'phone' => fake()->phoneNumber(),
+            'email' => fake()->unique()->safeEmail(),
             'billing_address' => [
                 'street' => fake()->streetAddress(),
                 'city' => fake()->city(),
@@ -32,12 +32,18 @@ class AccountFactory extends Factory
                 'zip' => fake()->postcode(),
                 'country' => fake()->country(),
             ],
-            'shipping_address' => null,
-            'annual_revenue' => fake()->optional()->randomFloat(2, 10000, 5000000),
-            'employee_count' => fake()->optional()->numberBetween(2, 2500),
+            'shipping_address' => [
+                'street' => fake()->streetAddress(),
+                'city' => fake()->city(),
+                'state' => fake()->stateAbbr(),
+                'zip' => fake()->postcode(),
+                'country' => fake()->country(),
+            ],
+            'annual_revenue' => fake()->randomFloat(2, 10000, 5000000),
+            'employee_count' => fake()->numberBetween(2, 2500),
             'owner_id' => User::factory(),
             'parent_account_id' => null,
-            'tags' => [],
+            'tags' => [fake()->word(), fake()->word()],
         ];
     }
 }

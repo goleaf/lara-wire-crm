@@ -8,6 +8,7 @@ use Modules\Calendar\Database\Seeders\CalendarDatabaseSeeder;
 use Modules\Campaigns\Database\Seeders\CampaignsDatabaseSeeder;
 use Modules\Cases\Database\Seeders\CasesDatabaseSeeder;
 use Modules\Contacts\Database\Seeders\ContactsDatabaseSeeder;
+use Modules\Core\Database\Seeders\CoreDatabaseSeeder;
 use Modules\Deals\Database\Seeders\DealsDatabaseSeeder;
 use Modules\Files\Database\Seeders\FilesDatabaseSeeder;
 use Modules\Invoices\Database\Seeders\InvoicesDatabaseSeeder;
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
             CampaignsDatabaseSeeder::class,
             CasesDatabaseSeeder::class,
             ReportsDatabaseSeeder::class,
+            CoreDatabaseSeeder::class,
         ]);
     }
 }

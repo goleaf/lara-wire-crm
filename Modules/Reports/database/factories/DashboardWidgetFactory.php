@@ -19,16 +19,19 @@ class DashboardWidgetFactory extends Factory
      */
     public function definition(): array
     {
+        $dashboardId = Dashboard::query()->value('id') ?? Dashboard::factory()->create()->getKey();
+        $reportId = Report::query()->value('id') ?? Report::factory()->create()->getKey();
+
         return [
-            'dashboard_id' => Dashboard::query()->value('id'),
-            'report_id' => Report::query()->value('id'),
+            'dashboard_id' => (string) $dashboardId,
+            'report_id' => (string) $reportId,
             'widget_type' => fake()->randomElement(['ReportChart', 'KPICard', 'ActivityFeed', 'PipelineFunnel', 'QuickStats', 'RecentDeals', 'OpenCases']),
-            'title' => fake()->optional()->sentence(2),
+            'title' => fake()->sentence(2),
             'position_x' => 0,
             'position_y' => 0,
             'width' => 4,
             'height' => 2,
-            'config' => [],
+            'config' => ['refresh' => '30s'],
         ];
     }
 }

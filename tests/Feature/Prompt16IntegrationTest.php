@@ -40,7 +40,9 @@ test('authorized users can open prompt 16 core pages', function () {
     $this->actingAs($user)
         ->get(route('core.settings'))
         ->assertOk()
-        ->assertSee('Settings');
+        ->assertSee('Settings')
+        ->assertSee('fa-solid fa-gear', false)
+        ->assertSee('fa-solid fa-gauge-high', false);
 
     $this->actingAs($user)
         ->get(route('core.audit-logs'))

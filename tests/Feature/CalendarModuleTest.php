@@ -111,3 +111,27 @@ test('calendar recurring events handle immutable carbon dates safely', function 
     expect($occurrences)->not->toBeEmpty();
     expect($occurrences->count())->toBeGreaterThan(1);
 });
+
+test('calendar month view shows event titles for visible days', function () {
+    $role = makeCalendarRole();
+
+    $user = User::factory()->create([
+        'role_id' => $role->id,
+    ]);
+
+    CalendarEvent::query()->create([
+        'title' => 'Quarterly planning review',
+        'type' => 'Meeting',
+        'start_at' => now()->addDay()->setTime(14, 0),
+        'end_at' => now()->addDay()->setTime(15, 0),
+        'organizer_id' => $user->id,
+        'status' => 'Scheduled',
+        'recurrence' => 'None',
+        'color' => '#0ea5e9',
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('calendar.index'))
+        ->assertOk()
+        ->assertSee('Quarterly planning review');
+});

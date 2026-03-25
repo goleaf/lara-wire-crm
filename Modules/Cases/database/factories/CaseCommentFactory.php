@@ -19,9 +19,12 @@ class CaseCommentFactory extends Factory
      */
     public function definition(): array
     {
+        $caseId = SupportCase::query()->value('id') ?? SupportCase::factory()->create()->getKey();
+        $userId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
-            'case_id' => SupportCase::query()->value('id'),
-            'user_id' => User::query()->value('id'),
+            'case_id' => (string) $caseId,
+            'user_id' => (string) $userId,
             'body' => fake()->sentence(),
             'is_internal' => fake()->boolean(25),
         ];

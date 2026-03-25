@@ -17,12 +17,14 @@ class InvoiceLineItemFactory extends Factory
         $unitPrice = fake()->randomFloat(2, 10, 500);
         $discount = fake()->randomFloat(2, 0, 20);
         $total = round($quantity * $unitPrice * (1 - ($discount / 100)), 2);
+        $invoiceId = Invoice::query()->value('id') ?? Invoice::factory()->create()->getKey();
+        $productId = Product::query()->value('id') ?? Product::factory()->create()->getKey();
 
         return [
-            'invoice_id' => Invoice::query()->value('id'),
-            'product_id' => Product::query()->value('id'),
+            'invoice_id' => (string) $invoiceId,
+            'product_id' => (string) $productId,
             'name' => fake()->words(3, true),
-            'description' => fake()->optional()->sentence(),
+            'description' => fake()->sentence(),
             'quantity' => $quantity,
             'unit_price' => $unitPrice,
             'discount_percent' => $discount,

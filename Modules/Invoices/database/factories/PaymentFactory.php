@@ -13,14 +13,17 @@ class PaymentFactory extends Factory
 
     public function definition(): array
     {
+        $invoiceId = Invoice::query()->value('id') ?? Invoice::factory()->create()->getKey();
+        $recordedBy = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
-            'invoice_id' => Invoice::query()->value('id'),
+            'invoice_id' => (string) $invoiceId,
             'amount' => fake()->randomFloat(2, 20, 800),
             'paid_at' => now()->subDays(fake()->numberBetween(0, 10))->toDateString(),
             'method' => fake()->randomElement(['Bank Transfer', 'Cash', 'Cheque', 'Internal Credit']),
-            'reference' => fake()->optional()->bothify('PAY-####'),
-            'recorded_by' => User::query()->value('id'),
-            'notes' => fake()->optional()->sentence(),
+            'reference' => fake()->bothify('PAY-####'),
+            'recorded_by' => (string) $recordedBy,
+            'notes' => fake()->sentence(),
         ];
     }
 }

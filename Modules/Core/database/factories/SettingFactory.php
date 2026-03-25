@@ -17,6 +17,10 @@ class SettingFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'key' => 'crm.setting.'.$this->faker->unique()->slug(),
+            'value' => $this->faker->sentence(),
+            'type' => 'string',
+        ];
     }
 }

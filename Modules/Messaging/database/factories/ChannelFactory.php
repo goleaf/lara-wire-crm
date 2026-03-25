@@ -4,7 +4,6 @@ namespace Modules\Messaging\Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Modules\Messaging\Models\Channel;
 
 class ChannelFactory extends Factory
@@ -19,12 +18,14 @@ class ChannelFactory extends Factory
      */
     public function definition(): array
     {
+        $userId = User::query()->value('id') ?? User::factory()->create()->getKey();
+
         return [
             'name' => $this->faker->words(2, true),
             'type' => $this->faker->randomElement(['Public', 'Private']),
-            'related_to_type' => null,
-            'related_to_id' => null,
-            'created_by' => User::query()->value('id') ?? Str::uuid()->toString(),
+            'related_to_type' => User::class,
+            'related_to_id' => (string) $userId,
+            'created_by' => (string) $userId,
         ];
     }
 }

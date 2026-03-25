@@ -43,8 +43,18 @@ class DealForm extends Component
 
     public string $source = '';
 
+    public string $accountSearch = '';
+
+    public string $contactSearch = '';
+
+    public string $ownerSearch = '';
+
+    public string $pipelineSearch = '';
+
+    public string $stageSearch = '';
+
     /**
-     * @var array<int, array{product_id:string,quantity:int,unit_price:float,discount:float,total:float}>
+     * @var array<int, array{product_id:string,product_name:string,quantity:int,unit_price:float,discount:float,total:float}>
      */
     public array $lineItems = [];
 
@@ -70,9 +80,18 @@ class DealForm extends Component
             $this->accountId = $prefillAccount;
         }
 
+        if ($this->contactId !== '' && $this->accountId === '') {
+            $prefilledContact = Contact::query()
+                ->select(['id', 'account_id'])
+                ->find($this->contactId);
+
+            $this->accountId = (string) ($prefilledContact?->account_id ?? '');
+        }
+
         if (! $id) {
             $this->lineItems = [$this->blankLineItem()];
             $this->recalculateExpectedRevenue();
+            $this->hydrateAutocompleteLabels();
 
             return;
         }
@@ -103,6 +122,7 @@ class DealForm extends Component
 
             return [
                 'product_id' => (string) $product->id,
+                'product_name' => (string) $product->name,
                 'quantity' => $quantity,
                 'unit_price' => $unitPrice,
                 'discount' => $discount,
@@ -113,11 +133,30 @@ class DealForm extends Component
         if ($this->lineItems === []) {
             $this->lineItems = [$this->blankLineItem()];
         }
+
+        $this->hydrateAutocompleteLabels();
     }
 
     public function updatedPipelineId(): void
     {
         $this->syncStageFromPipeline();
+        $this->syncPipelineSearchLabel();
+        $this->syncStageSearchLabel();
+    }
+
+    public function updatedStageId(string $stageId): void
+    {
+        $stage = PipelineStage::query()
+            ->select(['id', 'probability'])
+            ->find($stageId);
+
+        if (! $stage) {
+            return;
+        }
+
+        $this->probability = (int) $stage->probability;
+        $this->recalculateExpectedRevenue();
+        $this->syncStageSearchLabel();
     }
 
     public function updatedAmount(): void
@@ -145,8 +184,12 @@ class DealForm extends Component
         }
     }
 
-    public function updatedLineItems(): void
+    public function updatedLineItems(mixed $value = null, ?string $key = null): void
     {
+        if (is_string($key) && preg_match('/^(\d+)\.product_name$/', $key, $matches) === 1) {
+            $this->syncLineItemProductFromName((int) $matches[1], (string) $value);
+        }
+
         foreach ($this->lineItems as $index => $item) {
             $this->lineItems[$index]['total'] = $this->calculateLineTotal(
                 (int) ($item['quantity'] ?? 1),
@@ -154,6 +197,92 @@ class DealForm extends Component
                 (float) ($item['discount'] ?? 0),
             );
         }
+    }
+
+    public function updatedAccountSearch(string $value): void
+    {
+        $account = Account::query()
+            ->select(['id', 'name'])
+            ->where('name', $value)
+            ->first();
+
+        $this->accountId = (string) ($account?->id ?? '');
+
+        if ($this->accountId === '') {
+            $this->contactId = '';
+            $this->contactSearch = '';
+
+            return;
+        }
+
+        if ($this->contactId !== '') {
+            $contactBelongsToAccount = Contact::query()
+                ->select(['id'])
+                ->where('id', $this->contactId)
+                ->where('account_id', $this->accountId)
+                ->exists();
+
+            if (! $contactBelongsToAccount) {
+                $this->contactId = '';
+                $this->contactSearch = '';
+            }
+        }
+    }
+
+    public function updatedContactSearch(string $value): void
+    {
+        $contact = Contact::query()
+            ->select(['id', 'first_name', 'last_name', 'account_id'])
+            ->when($this->accountId !== '', fn ($query) => $query->where('account_id', $this->accountId))
+            ->orderBy('first_name')
+            ->limit(200)
+            ->get()
+            ->first(fn (Contact $contact): bool => $contact->full_name === $value);
+
+        $this->contactId = (string) ($contact?->id ?? '');
+
+        if ($contact && $this->accountId === '' && $contact->account_id) {
+            $this->accountId = (string) $contact->account_id;
+            $this->syncAccountSearchLabel();
+        }
+    }
+
+    public function updatedOwnerSearch(string $value): void
+    {
+        $owner = User::query()
+            ->select(['id', 'full_name'])
+            ->where('full_name', $value)
+            ->first();
+
+        $this->ownerId = (string) ($owner?->id ?? '');
+    }
+
+    public function updatedPipelineSearch(string $value): void
+    {
+        $pipeline = Pipeline::query()
+            ->select(['id', 'name'])
+            ->where('name', $value)
+            ->first();
+
+        $this->pipelineId = (string) ($pipeline?->id ?? '');
+    }
+
+    public function updatedStageSearch(string $value): void
+    {
+        if ($this->pipelineId === '') {
+            $this->stageId = '';
+
+            return;
+        }
+
+        $stage = PipelineStage::query()
+            ->select(['id', 'name', 'probability'])
+            ->where('pipeline_id', $this->pipelineId)
+            ->orderBy('order')
+            ->get()
+            ->first(fn (PipelineStage $stage): bool => $this->formatStageLabel($stage) === $value);
+
+        $this->stageId = (string) ($stage?->id ?? '');
     }
 
     public function save(): void
@@ -277,12 +406,13 @@ class DealForm extends Component
     }
 
     /**
-     * @return array{product_id:string,quantity:int,unit_price:float,discount:float,total:float}
+     * @return array{product_id:string,product_name:string,quantity:int,unit_price:float,discount:float,total:float}
      */
     protected function blankLineItem(): array
     {
         return [
             'product_id' => '',
+            'product_name' => '',
             'quantity' => 1,
             'unit_price' => 0,
             'discount' => 0,
@@ -301,5 +431,129 @@ class DealForm extends Component
     protected function nullableString(?string $value): ?string
     {
         return filled($value) ? trim((string) $value) : null;
+    }
+
+    protected function hydrateAutocompleteLabels(): void
+    {
+        $this->syncAccountSearchLabel();
+        $this->syncContactSearchLabel();
+        $this->syncOwnerSearchLabel();
+        $this->syncPipelineSearchLabel();
+        $this->syncStageSearchLabel();
+    }
+
+    protected function syncAccountSearchLabel(): void
+    {
+        $this->accountSearch = '';
+
+        if ($this->accountId === '') {
+            return;
+        }
+
+        $account = Account::query()
+            ->select(['id', 'name'])
+            ->find($this->accountId);
+
+        $this->accountSearch = (string) ($account?->name ?? '');
+    }
+
+    protected function syncContactSearchLabel(): void
+    {
+        $this->contactSearch = '';
+
+        if ($this->contactId === '') {
+            return;
+        }
+
+        $contact = Contact::query()
+            ->select(['id', 'first_name', 'last_name'])
+            ->find($this->contactId);
+
+        $this->contactSearch = (string) ($contact?->full_name ?? '');
+    }
+
+    protected function syncOwnerSearchLabel(): void
+    {
+        $this->ownerSearch = '';
+
+        if ($this->ownerId === '') {
+            return;
+        }
+
+        $owner = User::query()
+            ->select(['id', 'full_name'])
+            ->find($this->ownerId);
+
+        $this->ownerSearch = (string) ($owner?->full_name ?? '');
+    }
+
+    protected function syncPipelineSearchLabel(): void
+    {
+        $this->pipelineSearch = '';
+
+        if ($this->pipelineId === '') {
+            return;
+        }
+
+        $pipeline = Pipeline::query()
+            ->select(['id', 'name'])
+            ->find($this->pipelineId);
+
+        $this->pipelineSearch = (string) ($pipeline?->name ?? '');
+    }
+
+    protected function syncStageSearchLabel(): void
+    {
+        $this->stageSearch = '';
+
+        if ($this->stageId === '') {
+            return;
+        }
+
+        $stage = PipelineStage::query()
+            ->select(['id', 'name', 'probability'])
+            ->find($this->stageId);
+
+        if (! $stage) {
+            return;
+        }
+
+        $this->stageSearch = $this->formatStageLabel($stage);
+    }
+
+    protected function formatStageLabel(PipelineStage $stage): string
+    {
+        return $stage->name.' ('.$stage->probability.'%)';
+    }
+
+    protected function syncLineItemProductFromName(int $index, string $productName): void
+    {
+        if (! array_key_exists($index, $this->lineItems)) {
+            return;
+        }
+
+        $productName = trim($productName);
+
+        if ($productName === '') {
+            $this->lineItems[$index]['product_id'] = '';
+
+            return;
+        }
+
+        $product = Product::query()
+            ->select(['id', 'name', 'unit_price'])
+            ->active()
+            ->where('name', $productName)
+            ->first();
+
+        if (! $product) {
+            $this->lineItems[$index]['product_id'] = '';
+
+            return;
+        }
+
+        $this->lineItems[$index]['product_id'] = (string) $product->id;
+        $this->lineItems[$index]['product_name'] = (string) $product->name;
+        $this->lineItems[$index]['unit_price'] = (float) $product->unit_price;
     }
 }

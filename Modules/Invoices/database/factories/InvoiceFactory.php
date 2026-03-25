@@ -24,19 +24,21 @@ class InvoiceFactory extends Factory
     {
         $status = fake()->randomElement(['Draft', 'Issued', 'Partially Paid', 'Paid', 'Overdue']);
         $total = (float) fake()->randomFloat(2, 200, 15000);
+        $accountId = Account::query()->value('id') ?? Account::factory()->create()->getKey();
+        $ownerId = User::query()->value('id') ?? User::factory()->create()->getKey();
 
         return [
             'number' => sprintf('INV-%s-%04d', now()->format('Y'), fake()->unique()->numberBetween(1, 9999)),
             'quote_id' => Quote::query()->value('id'),
             'deal_id' => Deal::query()->value('id'),
-            'account_id' => Account::query()->value('id'),
+            'account_id' => (string) $accountId,
             'contact_id' => Contact::query()->value('id'),
-            'owner_id' => User::query()->value('id'),
+            'owner_id' => (string) $ownerId,
             'status' => $status,
             'issue_date' => now()->subDays(fake()->numberBetween(0, 30))->toDateString(),
             'due_date' => now()->addDays(fake()->numberBetween(-20, 45))->toDateString(),
-            'notes' => fake()->optional()->sentence(),
-            'internal_notes' => fake()->optional()->sentence(),
+            'notes' => fake()->sentence(),
+            'internal_notes' => fake()->sentence(),
             'subtotal' => $total,
             'discount_type' => fake()->randomElement(['Percentage', 'Fixed']),
             'discount_value' => fake()->randomFloat(2, 0, 10),
@@ -49,6 +51,7 @@ class InvoiceFactory extends Factory
                 default => 0,
             },
             'currency' => config('crm.default_currency.code', 'USD'),
+            'pdf_path' => 'crm-pdfs/invoices/'.fake()->uuid().'.pdf',
         ];
     }
 }

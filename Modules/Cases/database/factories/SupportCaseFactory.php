@@ -21,6 +21,11 @@ class SupportCaseFactory extends Factory
      */
     public function definition(): array
     {
+        $ownerId = User::query()->value('id') ?? User::factory()->create()->getKey();
+        $accountId = Account::query()->value('id') ?? Account::factory()->create()->getKey();
+        $contactId = Contact::query()->value('id') ?? Contact::factory()->create()->getKey();
+        $dealId = Deal::query()->value('id');
+
         return [
             'number' => sprintf('CASE-%04d', fake()->unique()->numberBetween(1, 9999)),
             'title' => fake()->sentence(4),
@@ -28,12 +33,12 @@ class SupportCaseFactory extends Factory
             'status' => fake()->randomElement(['Open', 'In Progress', 'Pending', 'Resolved', 'Closed']),
             'priority' => fake()->randomElement(['Low', 'Medium', 'High', 'Critical']),
             'type' => fake()->randomElement(['Bug', 'Feature Request', 'Question', 'Complaint', 'Other']),
-            'contact_id' => Contact::query()->value('id'),
-            'account_id' => Account::query()->value('id'),
-            'deal_id' => Deal::query()->value('id'),
-            'owner_id' => User::query()->value('id'),
+            'contact_id' => (string) $contactId,
+            'account_id' => (string) $accountId,
+            'deal_id' => $dealId,
+            'owner_id' => (string) $ownerId,
             'channel' => fake()->randomElement(['Phone', 'In-person', 'Internal Portal', 'Other']),
-            'resolution_notes' => fake()->optional()->sentence(),
+            'resolution_notes' => fake()->sentence(),
         ];
     }
 }
