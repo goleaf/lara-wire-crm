@@ -1,4 +1,4 @@
-<article class="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+<article class="crm-card p-5">
     <div class="flex items-center justify-between gap-3">
         <div>
             <h4 class="text-base font-semibold text-slate-900 dark:text-white">{{ $file->name }}</h4>

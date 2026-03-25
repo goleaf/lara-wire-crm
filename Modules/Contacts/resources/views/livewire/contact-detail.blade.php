@@ -5,7 +5,7 @@
         </div>
     @endif
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $contact->full_name }}</h2>
@@ -52,7 +52,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Email</dt>
@@ -91,7 +91,7 @@
     @endif
 
     @if ($tab === 'deals')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Deals</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($deals as $deal)
@@ -111,13 +111,13 @@
     @endif
 
     @if ($tab === 'activities')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $contact::class, 'modelId' => (string) $contact->id], key('contact-timeline-'.$contact->id))
         </article>
     @endif
 
     @if ($tab === 'cases')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Cases</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($cases as $case)

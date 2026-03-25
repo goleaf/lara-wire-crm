@@ -1,11 +1,11 @@
 <section class="space-y-6">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $caseId ? 'Edit Case' : 'Create Case' }}</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Capture support details and SLA context.</p>
     </article>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="grid gap-4 md:grid-cols-2">
                 <label class="space-y-1 md:col-span-2">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Title</span>
@@ -25,7 +25,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="grid gap-4 md:grid-cols-3">
                 <label class="space-y-1">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Status</span>
@@ -156,7 +156,7 @@
             </p>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <label class="space-y-1">
                 <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resolution Notes</span>
                 <textarea wire:model.live.debounce.300ms="resolution_notes" rows="4" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900"></textarea>
@@ -167,10 +167,10 @@
         </article>
 
         <div class="flex items-center justify-end gap-2">
-            <a href="{{ route('cases.index') }}" wire:navigate class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <a href="{{ route('cases.index') }}" wire:navigate class="crm-btn crm-btn-secondary">
                 Cancel
             </a>
-            <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+            <button type="submit" class="crm-btn crm-btn-primary">
                 Save Case
             </button>
         </div>

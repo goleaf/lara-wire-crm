@@ -10,7 +10,7 @@
                 <h1 class="mt-3 text-3xl font-semibold">Access Denied</h1>
                 <p class="mt-3 text-sm text-slate-300">You do not have permission to view this page.</p>
                 <div class="mt-6">
-                    <a href="{{ Route::has('dashboard') ? route('dashboard') : route('home') }}" class="inline-flex rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+                    <a href="{{ Route::has('dashboard') ? route('dashboard') : route('home') }}" class="crm-btn crm-btn-primary">
                         Back to Dashboard
                     </a>
                 </div>

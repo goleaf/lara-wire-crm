@@ -150,6 +150,6 @@
     </div>
 
     <div class="flex justify-end">
-        <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white">Save Event</button>
+        <button type="submit" class="crm-btn crm-btn-primary">Save Event</button>
     </div>
 </form>

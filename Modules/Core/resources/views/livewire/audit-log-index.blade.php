@@ -1,5 +1,5 @@
 <section class="space-y-6">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Audit Logs</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Track created, updated, and deleted events across key records.</p>
     </article>

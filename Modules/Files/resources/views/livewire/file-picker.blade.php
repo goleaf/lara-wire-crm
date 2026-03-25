@@ -1,8 +1,8 @@
 <section class="space-y-4">
-    <div class="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <div class="crm-card p-5">
         <div class="flex items-center justify-between gap-3">
             <h4 class="text-base font-semibold text-slate-900 dark:text-white">Pick Existing Files</h4>
-            <button wire:click="confirmSelection" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">
+            <button wire:click="confirmSelection" class="crm-btn crm-btn-primary">
                 Confirm Selection
             </button>
         </div>

@@ -8,12 +8,12 @@
             </div>
         @endif
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $dashboard->name }}</h3>
             <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Update dashboard metadata and persist widget layout JSON.</p>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <form method="POST" action="{{ route('dashboards.update', $dashboard->id) }}" class="space-y-4">
                 @csrf
                 @method('PATCH')
@@ -38,7 +38,7 @@
                     </label>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+                    <button type="submit" class="crm-btn crm-btn-primary">
                         Save Layout
                     </button>
                 </div>

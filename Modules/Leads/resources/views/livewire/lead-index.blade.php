@@ -1,23 +1,19 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Leads</h3>
             <div class="flex items-center gap-2">
-                <a href="{{ route('leads.kanban') }}" wire:navigate class="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+                <x-crm.link-button href="{{ route('leads.kanban') }}" wire:navigate variant="secondary" size="sm">
                     Kanban
-                </a>
-                <button wire:click="exportCsv" class="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+                </x-crm.link-button>
+                <x-crm.button wire:click="exportCsv" variant="secondary" size="sm">
                     Export CSV
-                </button>
-                <a href="{{ route('leads.create') }}" wire:navigate class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">
+                </x-crm.button>
+                <x-crm.link-button href="{{ route('leads.create') }}" wire:navigate variant="primary">
                     New Lead
-                </a>
+                </x-crm.link-button>
             </div>
         </div>
 
@@ -65,9 +61,9 @@
                 <option value="1">Converted</option>
             </select>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <x-crm.card class="overflow-hidden">
         <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
             <select wire:model.live="bulkOwnerId" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs dark:border-slate-700 dark:bg-slate-900">
                 <option value="">Assign owner</option>
@@ -180,5 +176,5 @@
         <div class="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
             {{ $leads->links() }}
         </div>
-    </article>
+    </x-crm.card>
 </section>

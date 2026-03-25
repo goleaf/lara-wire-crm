@@ -1,4 +1,4 @@
-<article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+<article class="crm-card p-6">
     <h4 class="text-base font-semibold text-slate-900 dark:text-white">Upload Files</h4>
 
     <form wire:submit="save" class="mt-4 space-y-4">

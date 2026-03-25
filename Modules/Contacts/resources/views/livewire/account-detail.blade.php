@@ -1,5 +1,5 @@
 <section class="space-y-6">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $account->name }}</h2>
@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('accounts.edit', $account->id) }}" wire:navigate class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <a href="{{ route('accounts.edit', $account->id) }}" wire:navigate class="crm-btn crm-btn-secondary">
                 Edit Account
             </a>
         </div>
@@ -31,7 +31,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Website</dt>
@@ -84,7 +84,7 @@
     @endif
 
     @if ($tab === 'contacts')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Contacts</h3>
                 <a href="{{ route('contacts.create', ['account_id' => $account->id]) }}" wire:navigate class="rounded-xl bg-sky-600 px-3 py-2 text-xs font-semibold text-white">Quick Add</a>
@@ -109,7 +109,7 @@
     @endif
 
     @if ($tab === 'deals')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Deals</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($deals as $deal)
@@ -129,7 +129,7 @@
     @endif
 
     @if ($tab === 'activities')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $account::class, 'modelId' => (string) $account->id], key('account-timeline-'.$account->id))
         </article>
     @endif

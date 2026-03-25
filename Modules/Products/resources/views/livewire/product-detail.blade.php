@@ -1,5 +1,5 @@
 <section class="space-y-6">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Product</p>
@@ -10,14 +10,14 @@
             <a
                 href="{{ route('products.edit', $product->id) }}"
                 wire:navigate
-                class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500"
+                class="crm-btn crm-btn-primary"
             >
                 Edit
             </a>
         </div>
     </article>
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <dl class="grid gap-5 md:grid-cols-2">
             <div>
                 <dt class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">Category</dt>
@@ -71,7 +71,7 @@
     </article>
 
     @if ($product->description)
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Description</h4>
             <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{{ $product->description }}</p>
         </article>

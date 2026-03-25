@@ -1,12 +1,8 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
     <form wire:submit="save" class="space-y-6">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $activityId ? 'Edit Activity' : 'New Activity' }}</h3>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -135,7 +131,7 @@
         </article>
 
         <div class="flex justify-end gap-2">
-            <a href="{{ $activityId ? route('activities.show', $activityId) : route('activities.index') }}" wire:navigate class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <a href="{{ $activityId ? route('activities.show', $activityId) : route('activities.index') }}" wire:navigate class="crm-btn crm-btn-secondary">
                 Cancel
             </a>
             <button type="submit" class="rounded-xl bg-sky-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">

@@ -1,18 +1,14 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Activity Feed</h3>
             <div class="flex items-center gap-2">
                 <a href="{{ route('activities.mine') }}" wire:navigate class="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
                     My Activities
                 </a>
-                <a href="{{ route('activities.create') }}" wire:navigate class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">
+                <a href="{{ route('activities.create') }}" wire:navigate class="crm-btn crm-btn-primary">
                     New Activity
                 </a>
             </div>

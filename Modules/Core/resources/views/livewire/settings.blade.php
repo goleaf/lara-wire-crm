@@ -1,11 +1,11 @@
 <section class="space-y-6">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Settings</h3>
         <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Application defaults, company profile, and PDF header information.</p>
     </article>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">App Name</span>
@@ -53,7 +53,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Company Info</h4>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -80,7 +80,7 @@
         </article>
 
         <div class="flex justify-end">
-            <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+            <button type="submit" class="crm-btn crm-btn-primary">
                 Save Settings
             </button>
         </div>

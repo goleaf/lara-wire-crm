@@ -215,7 +215,7 @@
     </section>
 
     <section x-show="tab === 'activities'" x-cloak>
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $campaign::class, 'modelId' => (string) $campaign->id], key('campaign-timeline-'.$campaign->id))
         </article>
     </section>

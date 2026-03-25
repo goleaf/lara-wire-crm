@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Calendar\Http\Controllers\CalendarController;
 use Modules\Calendar\Livewire\CalendarView;
 
 Route::middleware(['auth', 'verified', 'active'])->group(function () {
@@ -9,6 +8,5 @@ Route::middleware(['auth', 'verified', 'active'])->group(function () {
         Route::livewire('calendar', CalendarView::class)->name('calendar.index');
         Route::livewire('calendar/week', CalendarView::class)->defaults('view', 'week')->name('calendar.week');
         Route::livewire('calendar/day/{date?}', CalendarView::class)->defaults('view', 'day')->name('calendar.day');
-        Route::get('calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
     });
 });

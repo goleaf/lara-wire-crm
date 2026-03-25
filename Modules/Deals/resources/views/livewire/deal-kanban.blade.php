@@ -1,16 +1,12 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Deal Pipeline</h3>
             <div class="flex items-center gap-2">
                 <a href="{{ route('deals.list') }}" wire:navigate class="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">Table View</a>
-                <a href="{{ route('deals.create') }}" wire:navigate class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">New Deal</a>
+                <a href="{{ route('deals.create') }}" wire:navigate class="crm-btn crm-btn-primary">New Deal</a>
             </div>
         </div>
 
@@ -37,7 +33,7 @@
                 $columnDeals = $deals->get($stage->id, collect());
                 $columnTotal = $columnDeals->sum('amount');
             @endphp
-            <article class="rounded-3xl border border-white/70 bg-white/80 p-4 shadow-sm dark:border-white/10 dark:bg-slate-950/40" style="border-top: 4px solid {{ $stage->color }}">
+            <article class="crm-card p-4" style="border-top: 4px solid {{ $stage->color }}">
                 <div class="mb-3 flex items-center justify-between">
                     <h4 class="text-sm font-semibold text-slate-900 dark:text-white">{{ $stage->name }}</h4>
                     <span class="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">{{ $columnDeals->count() }}</span>

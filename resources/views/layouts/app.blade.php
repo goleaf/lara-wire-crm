@@ -82,7 +82,7 @@
                                         title="{{ $item['label'] }}"
                                     >
                                         <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-black/10 text-xs font-semibold uppercase tracking-[0.2em] text-current dark:bg-white/10">
-                                            {{ $item['initials'] }}
+                                            {{ $item['initials'] ?? strtoupper(substr((string) ($item['label'] ?? ''), 0, 1)) }}
                                         </span>
                                         <span x-show="!sidebarCollapsed">{{ $item['label'] }}</span>
                                     </a>

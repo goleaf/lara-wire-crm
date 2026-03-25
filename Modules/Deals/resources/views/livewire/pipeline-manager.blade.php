@@ -1,15 +1,11 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Pipelines</h3>
         <div class="mt-4 flex flex-wrap items-center gap-2">
             <input wire:model.blur="name" type="text" placeholder="New pipeline name" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
-            <button wire:click="createPipeline" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white">Create</button>
+            <button wire:click="createPipeline" class="crm-btn crm-btn-primary">Create</button>
         </div>
 
         <div class="mt-4 grid gap-3 md:grid-cols-2">
@@ -33,13 +29,13 @@
         </div>
     </article>
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Stages</h3>
         <div class="mt-4 grid gap-3 md:grid-cols-4">
             <input wire:model.blur="newStageName" type="text" placeholder="Stage name" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
             <input wire:model.blur="newStageProbability" type="number" min="0" max="100" placeholder="Probability" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
             <input wire:model.live="newStageColor" type="color" class="h-10 rounded-xl border border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-900" />
-            <button wire:click="createStage" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white">Add Stage</button>
+            <button wire:click="createStage" class="crm-btn crm-btn-primary">Add Stage</button>
         </div>
 
         <div class="mt-4 space-y-2" wire:sort="updateStageOrder">

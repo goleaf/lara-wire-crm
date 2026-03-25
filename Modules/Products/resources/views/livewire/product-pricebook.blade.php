@@ -1,5 +1,5 @@
 <section class="space-y-6 print:space-y-4">
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm print:rounded-none print:border-none print:p-0 print:shadow-none dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6 print:rounded-none print:border-none print:p-0 print:shadow-none">
         <div class="flex items-center justify-between">
             <div>
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Product Pricebook</h3>
@@ -16,7 +16,7 @@
     </article>
 
     @forelse ($groupedProducts as $category => $items)
-        <article class="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-sm print:rounded-none print:border print:shadow-none dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card overflow-hidden print:rounded-none print:border print:shadow-none">
             <header class="border-b border-slate-200 bg-slate-100/70 px-5 py-3 dark:border-slate-800 dark:bg-slate-900/70">
                 <h4 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">{{ $category }}</h4>
             </header>

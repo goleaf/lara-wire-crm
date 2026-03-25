@@ -1,9 +1,5 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
     @php
         $priorityClass = match ($supportCase->priority) {
@@ -37,7 +33,7 @@
         }
     @endphp
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $supportCase->number }}</h2>
@@ -60,7 +56,7 @@
         </div>
     </article>
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="grid gap-4 md:grid-cols-5">
             @foreach ($statusFlow as $statusStep)
                 <button
@@ -109,7 +105,7 @@
     </article>
 
     @if ($tab === 'comments')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Comments</h3>
             <div class="mt-4 space-y-3">
                 @forelse ($supportCase->comments as $comment)
@@ -141,12 +137,12 @@
                     Internal Note
                 </label>
                 <div class="flex justify-end">
-                    <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">Submit Comment</button>
+                    <button type="submit" class="crm-btn crm-btn-primary">Submit Comment</button>
                 </div>
             </form>
         </article>
     @elseif ($tab === 'activities')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $supportCase::class, 'modelId' => (string) $supportCase->id], key('case-timeline-'.$supportCase->id))
         </article>
     @elseif ($tab === 'files')

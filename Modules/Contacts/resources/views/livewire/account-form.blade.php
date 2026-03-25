@@ -1,12 +1,8 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
     <form wire:submit="save" class="space-y-6">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Account Profile</h3>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -95,7 +91,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="flex items-center justify-between gap-3">
                 <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Addresses</h3>
                 <label class="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
@@ -126,13 +122,13 @@
         </article>
 
         <div class="flex flex-wrap items-center justify-end gap-2">
-            <a href="{{ route('accounts.index') }}" wire:navigate class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <a href="{{ route('accounts.index') }}" wire:navigate class="crm-btn crm-btn-secondary">
                 Cancel
             </a>
-            <button type="button" wire:click="save('new')" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <button type="button" wire:click="save('new')" class="crm-btn crm-btn-secondary">
                 Save & New
             </button>
-            <button type="button" wire:click="save('continue')" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">
+            <button type="button" wire:click="save('continue')" class="crm-btn crm-btn-primary">
                 Save & Continue
             </button>
         </div>

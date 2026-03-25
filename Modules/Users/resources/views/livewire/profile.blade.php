@@ -1,11 +1,7 @@
 <section class="mx-auto max-w-4xl space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
                 <h2 class="text-xl font-semibold text-slate-900 dark:text-white">My Profile</h2>
@@ -18,7 +14,7 @@
     </article>
 
     <form wire:submit="save" class="space-y-6">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Account</h3>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -39,7 +35,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Security</h3>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="space-y-1">
@@ -60,7 +56,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Notification Preferences</h3>
             <div class="mt-4 grid gap-3 md:grid-cols-2">
                 @foreach ($notification_types as $type => $enabled)
@@ -84,7 +80,7 @@
             </div>
         </article>
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <div class="flex items-center justify-between gap-4">
                 <div>
                     <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Quota Progress (This Month)</h3>
@@ -102,7 +98,7 @@
         </article>
 
         <div class="flex justify-end">
-            <button type="submit" class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+            <button type="submit" class="crm-btn crm-btn-primary">
                 Save Profile
             </button>
         </div>

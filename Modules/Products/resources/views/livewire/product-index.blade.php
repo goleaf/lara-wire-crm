@@ -1,12 +1,8 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
     <div class="grid gap-6 lg:grid-cols-[17rem_minmax(0,1fr)]">
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-5">
             <h3 class="text-base font-semibold text-slate-900 dark:text-white">Category Filter</h3>
             <div class="mt-4 space-y-2">
                 <button
@@ -27,21 +23,21 @@
         </article>
 
         <div class="space-y-6">
-            <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+            <article class="crm-card p-6">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Products</h3>
                     <div class="flex items-center gap-2">
                         <a
                             href="{{ route('products.categories') }}"
                             wire:navigate
-                            class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300"
+                            class="crm-btn crm-btn-secondary"
                         >
                             Categories
                         </a>
                         <a
                             href="{{ route('products.create') }}"
                             wire:navigate
-                            class="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500"
+                            class="crm-btn crm-btn-primary"
                         >
                             New Product
                         </a>
@@ -78,14 +74,14 @@
                     <a
                         href="{{ route('products.pricebook') }}"
                         wire:navigate
-                        class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300"
+                        class="inline-flex items-center justify-center crm-btn crm-btn-secondary"
                     >
                         Pricebook
                     </a>
                 </div>
             </article>
 
-            <article class="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+            <article class="crm-card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
                         <thead class="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">

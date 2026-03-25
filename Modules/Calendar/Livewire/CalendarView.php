@@ -4,6 +4,8 @@ namespace Modules\Calendar\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Modules\Calendar\Services\CalendarService;
@@ -124,22 +126,61 @@ class CalendarView extends Component
         $this->closeOverlays();
     }
 
-    public function render(): View
+    #[Computed]
+    public function events(): Collection
     {
         $anchor = Carbon::parse($this->currentDate);
 
-        $events = match ($this->view) {
+        return match ($this->view) {
             'week' => $this->calendarService->getEventsForWeek($anchor->copy(), auth()->user()),
             'day' => $this->calendarService->getEventsForDay(Carbon::parse($this->selectedDay), auth()->user()),
             default => $this->calendarService->getEventsForMonth($anchor->year, $anchor->month, auth()->user()),
         };
+    }
 
-        $eventsByDate = $events->groupBy(fn ($event) => $event->start_at?->toDateString() ?? '');
+    #[Computed]
+    public function eventsByDate(): Collection
+    {
+        return $this->events->groupBy(fn ($event) => $event->start_at?->toDateString() ?? '');
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    #[Computed]
+    public function rangeEvents(): array
+    {
+        $range = $this->visibleRange();
+
+        return $this->events
+            ->filter(fn ($event): bool => (bool) $event->start_at?->between($range['from'], $range['to']))
+            ->values()
+            ->map(fn ($event): array => [
+                'id' => $event->id,
+                'title' => $event->title,
+                'type' => $event->type,
+                'start_at' => $event->start_at?->toDateTimeString(),
+                'end_at' => $event->end_at?->toDateTimeString(),
+                'all_day' => $event->all_day,
+                'status' => $event->status,
+                'color' => $event->color,
+                'organizer' => $event->organizer?->full_name,
+            ])
+            ->all();
+    }
+
+    public function render(): View
+    {
+        $anchor = Carbon::parse($this->currentDate);
+        $range = $this->visibleRange();
 
         return view('calendar::livewire.calendar-view', [
             'anchor' => $anchor,
-            'events' => $events,
-            'eventsByDate' => $eventsByDate,
+            'events' => $this->events,
+            'eventsByDate' => $this->eventsByDate,
+            'rangeEvents' => $this->rangeEvents,
+            'rangeFrom' => $range['from']->toDateString(),
+            'rangeTo' => $range['to']->toDateString(),
             'monthDays' => $this->monthDays($anchor),
             'weekDays' => $this->weekDays($anchor),
         ])->extends('core::layouts.module', ['title' => 'Calendar']);
@@ -173,5 +214,28 @@ class CalendarView extends Component
         }
 
         return $days;
+    }
+
+    /**
+     * @return array{from: Carbon, to: Carbon}
+     */
+    protected function visibleRange(): array
+    {
+        $anchor = Carbon::parse($this->currentDate);
+
+        return match ($this->view) {
+            'week' => [
+                'from' => $anchor->copy()->startOfWeek(Carbon::MONDAY),
+                'to' => $anchor->copy()->endOfWeek(Carbon::SUNDAY),
+            ],
+            'day' => [
+                'from' => Carbon::parse($this->selectedDay)->startOfDay(),
+                'to' => Carbon::parse($this->selectedDay)->endOfDay(),
+            ],
+            default => [
+                'from' => $anchor->copy()->startOfMonth(),
+                'to' => $anchor->copy()->endOfMonth(),
+            ],
+        };
     }
 }

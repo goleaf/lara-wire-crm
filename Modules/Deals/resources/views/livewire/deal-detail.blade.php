@@ -1,11 +1,7 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <article class="crm-card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">{{ $deal->name }}</h2>
@@ -51,7 +47,7 @@
     </article>
 
     @if ($tab === 'overview')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <dl class="grid gap-4 md:grid-cols-2">
                 <div>
                     <dt class="text-xs uppercase tracking-wide text-slate-500">Owner</dt>
@@ -88,7 +84,7 @@
     @endif
 
     @if ($tab === 'products')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <h3 class="mb-3 text-lg font-semibold text-slate-900 dark:text-white">Line Items</h3>
             <div class="space-y-2">
                 @forelse ($deal->products as $product)
@@ -106,7 +102,7 @@
     @endif
 
     @if ($tab === 'activities')
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             @livewire(\Modules\Core\Livewire\ActivityTimeline::class, ['modelType' => $deal::class, 'modelId' => (string) $deal->id], key('deal-timeline-'.$deal->id))
         </article>
     @endif

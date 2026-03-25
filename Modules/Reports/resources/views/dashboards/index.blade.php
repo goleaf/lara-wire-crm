@@ -8,14 +8,14 @@
             </div>
         @endif
 
-        <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+        <article class="crm-card p-6">
             <form method="POST" action="{{ route('dashboards.store') }}" class="grid gap-3 md:grid-cols-[1fr_auto]">
                 @csrf
                 <label class="space-y-1">
                     <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Dashboard Name</span>
                     <input type="text" name="name" required class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900">
                 </label>
-                <button type="submit" class="self-end rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500">
+                <button type="submit" class="self-end crm-btn crm-btn-primary">
                     Create Dashboard
                 </button>
             </form>

@@ -67,7 +67,7 @@
     </div>
 
     @if ($editable)
-        <button type="button" wire:click="addRow" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:text-slate-300">
+        <button type="button" wire:click="addRow" class="crm-btn crm-btn-secondary">
             Add Row
         </button>
     @endif

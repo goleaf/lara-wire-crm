@@ -1,20 +1,16 @@
 <section class="space-y-6">
-    @if (session('status'))
-        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-crm.status />
 
-    <article class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <x-crm.card class="p-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Contacts</h3>
-            <a
+            <x-crm.link-button
                 href="{{ route('contacts.create') }}"
                 wire:navigate
-                class="inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500"
+                variant="primary"
             >
                 New Contact
-            </a>
+            </x-crm.link-button>
         </div>
 
         <div class="mt-5 grid gap-3 md:grid-cols-5">
@@ -52,9 +48,9 @@
                 @endforeach
             </select>
         </div>
-    </article>
+    </x-crm.card>
 
-    <article class="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/40">
+    <x-crm.card class="overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
                 <thead class="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
@@ -118,5 +114,5 @@
         <div class="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
             {{ $contacts->links() }}
         </div>
-    </article>
+    </x-crm.card>
 </section>
